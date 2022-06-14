@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaLibrary.UI", "MangaLibrary.UI\MangaLibrary.UI.csproj", "{E637D3B6-1891-4A6F-89C5-25CD1347849D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaLibrary.DataAccess", "MangaLibrary.DataAccess\MangaLibrary.DataAccess.csproj", "{F21240FE-655D-43B7-9893-8F40E099409B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E637D3B6-1891-4A6F-89C5-25CD1347849D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E637D3B6-1891-4A6F-89C5-25CD1347849D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E637D3B6-1891-4A6F-89C5-25CD1347849D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21240FE-655D-43B7-9893-8F40E099409B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21240FE-655D-43B7-9893-8F40E099409B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21240FE-655D-43B7-9893-8F40E099409B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21240FE-655D-43B7-9893-8F40E099409B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
