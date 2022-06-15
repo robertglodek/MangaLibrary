@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MangaLibrary.DataAccess.Entities
-{
+{ 
     public class Review:EntityBase
     {
         public string Content { get; set; }
