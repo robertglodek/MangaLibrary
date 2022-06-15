@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.CQRS.Queries.Genre;
 using MediatR;
@@ -12,21 +13,26 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
 {
-    public class GetGenreHandler : IRequestHandler<GetGenreRequest, GetGenreResponse>
+    public class GetGenreByIdHandler : IRequestHandler<GetGenreByIdRequest, GetGenreByIdResponse>
     {
         private readonly IQueryExecutor _executor;
         private readonly IMapper _mapper;
 
-        public GetGenreHandler(IQueryExecutor executor,IMapper mapper)
+        public GetGenreByIdHandler(IQueryExecutor executor,IMapper mapper)
         {
             _executor = executor;
             _mapper = mapper;
         }
-        public async Task<GetGenreResponse> Handle(GetGenreRequest request, CancellationToken cancellationToken)
+        public async Task<GetGenreByIdResponse> Handle(GetGenreByIdRequest request, CancellationToken cancellationToken)
         {
             var query = new GetGenreQuery() { Id=request.Id };
             var result = await _executor.Execute(query);
-            var response = new GetGenreResponse()
+            if(result==null)
+            {
+                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound) };
+            }
+
+            var response = new GetGenreByIdResponse()
             {
                 Data = _mapper.Map<GenreDTO>(result)
             };

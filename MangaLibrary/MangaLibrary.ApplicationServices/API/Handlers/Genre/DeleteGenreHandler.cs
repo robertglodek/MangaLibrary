@@ -23,9 +23,9 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         public async Task<DeleteGenreResponse> Handle(DeleteGenreRequest request, CancellationToken cancellationToken)
         {
             var command = new DeleteGenreCommand() { Parameter= request.Id };
-            await _executor.Execute(command);
-
-            return new DeleteGenreResponse();
+            var result=await _executor.Execute(command);
+            var response = new DeleteGenreResponse() { Data = result };
+            return response;
         }
     }
 }

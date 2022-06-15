@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Genre
 {
-    public class GetGenreResponse:ResponseBase<GenreDTO>
+    public class GetGenreByIdResponse:ResponseBase<GenreDTO>
     {
     }
 }

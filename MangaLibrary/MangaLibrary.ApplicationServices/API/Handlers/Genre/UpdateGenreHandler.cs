@@ -26,7 +26,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
             var genre = _mapper.Map<MangaLibrary.DataAccess.Entities.Genre>(request);
             var command = new UpdateGenreCommand() { Parameter = genre };
             var result = await _executor.Execute(command);
-            var response = new UpdateGenreResponse();
+            var response = new UpdateGenreResponse() { Data=result };
             return response;
         }
     }

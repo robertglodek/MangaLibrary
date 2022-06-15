@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Genre
 {
-    public class GetGenreRequest:IRequest<GetGenreResponse>
+    public class GetGenreByIdRequest:IRequest<GetGenreByIdResponse>
     {
         public Guid Id { get; set; }
     }

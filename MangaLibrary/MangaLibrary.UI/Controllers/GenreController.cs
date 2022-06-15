@@ -7,56 +7,45 @@ namespace MangaLibrary.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenreController : Controller
+    public class GenreController : ApiControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public GenreController(IMediator mediator)
+        public GenreController(IMediator mediator):base(mediator)
         {
-            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetGenreResponse>> Get()
+        public Task<IActionResult> Get()
         {
-            var request = new GetGenresRequest();
-            var result = await _mediator.Send(request);
-            return Ok(result);
+            return this.HandleRequest<GetGenresRequest,GetGenresResponse>(new GetGenresRequest());
         }
-
 
         [HttpGet]
         [Route("{Id}")]
-        public async Task<ActionResult<GetGenreResponse>> Get([FromRoute] GetGenreRequest request)
+        public Task<IActionResult> Get([FromRoute] GetGenreByIdRequest request)
         {
-            var result = await _mediator.Send(request);
-            return Ok(result);
+            return this.HandleRequest<GetGenreByIdRequest, GetGenreByIdResponse>(request);   
         }
-
 
         [HttpPost]
-        public async Task<ActionResult<AddGenreResponse>> Add([FromBody] AddGenreRequest request)
+        public Task<IActionResult> Add([FromBody] AddGenreRequest request)
         {
-            var result = await _mediator.Send(request);
-            return Created($"/api/genre/{result.Data.Id}",result);
+            return this.HandleRequest<AddGenreRequest, AddGenreResponse>(request);
         }
-
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody] UpdateGenreRequest request)
+        public Task<IActionResult> Update([FromBody] UpdateGenreRequest request)
         {
-            var result = await _mediator.Send(request);
-            return NoContent();
+            return this.HandleRequest<UpdateGenreRequest, UpdateGenreResponse>(request);    
         }
 
-     
         [HttpDelete]
         [Route("{Id}")]
-        public async Task<ActionResult> Delete([FromRoute] DeleteGenreRequest request)
+        public Task<IActionResult> Delete([FromRoute] DeleteGenreRequest request)
         {
-            var result = await _mediator.Send(request);
-            return NoContent();
+            return this.HandleRequest<DeleteGenreRequest, DeleteGenreResponse>(request); 
         }
 
     }
+
+ 
 }

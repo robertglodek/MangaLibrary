@@ -10,6 +10,6 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Genre
     public class UpdateGenreRequest:IRequest<UpdateGenreResponse>
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

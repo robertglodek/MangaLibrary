@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Validators.Genre
 {
-    public class AddGenreRequestValidator:AbstractValidator<AddGenreRequest>
+    public class UpdateGenreRequestValidator:AbstractValidator<UpdateGenreRequest>
     {
-        public AddGenreRequestValidator(MangaLibraryDbContext context)
+        public UpdateGenreRequestValidator(MangaLibraryDbContext context)
         {
-
+            RuleFor(x => x.Id).NotEmpty();
             RuleFor(n => n.Name).NotEmpty().MaximumLength(100);
-            RuleFor(n => n.Name).Custom((value, validationContext) => 
+            RuleFor(n => n.Name).Custom((value, validationContext) =>
             {
                 var nameInUse = context.Genres.Any(n => n.Name == value);
                 if (nameInUse)
@@ -23,6 +23,5 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Genre
 
             });
         }
-       
     }
 }

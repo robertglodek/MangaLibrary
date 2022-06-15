@@ -1,44 +1,56 @@
 using FluentValidation.AspNetCore;
+using MangaLibrary.ApplicationServices;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.Data;
 using MangaLibrary.DataAccess.Data.Initializer;
+using MangaLibrary.UI.Middleware;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-builder.Services.AddControllers().AddFluentValidation(config =>
-{
-    config.RegisterValidatorsFromAssembly(typeof(GetGenreRequest).Assembly);
-});
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-builder.Services.AddMediatR(typeof(GetGenreRequest).Assembly);
+builder.Services.AddMediatR(typeof(GetGenreByIdRequest).Assembly);
+builder.Services.AddAutoMapper(typeof(GetGenreByIdRequest).Assembly);
+builder.Services.AddScoped<IQueryExecutor, QueryExecutor>();
+builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<RequestTimeMiddleware>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MangaLibraryDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("MangaLibraryConntectionString"));
 });
-builder.Services.AddAutoMapper(typeof(GetGenreRequest).Assembly);
-builder.Services.AddScoped<IQueryExecutor, QueryExecutor>();
-builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
-
-
-
+builder.Services.AddControllers().AddFluentValidation(config =>
+{
+    config.RegisterValidatorsFromAssembly(typeof(GetGenreByIdRequest).Assembly);
+});
+builder.Services.Configure<ApiBehaviorOptions>(options => 
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
 using (var scope = app.Services.CreateScope())
 {
     await scope.ServiceProvider.GetRequiredService<IDbInitializer>().InitializeAsync();
 }
+// Configure the HTTP request pipeline.
+app.UseExceptionHandlerMiddleware();
+app.UseRequestTimeHandlerMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
