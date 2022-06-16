@@ -16,10 +16,11 @@ namespace MangaLibrary.UI.Middleware
         {
             try
             {
+               
                 await next(context);
             }
             catch (Exception exception)
-            {
+            { 
                 _logger.LogError(exception,exception.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 var errorModel = new ErrorModel(ErrorType.InternalServerError);

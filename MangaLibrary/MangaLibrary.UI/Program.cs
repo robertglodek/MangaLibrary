@@ -39,17 +39,26 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
+builder.Services.AddCors(options =>
+{
+    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<IEnumerable<string>>().ToArray();
+    options.AddPolicy("FrontEndClients", builder =>
+                 builder.AllowAnyMethod().AllowAnyHeader().WithOrigins(allowedOrigins));
+});
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     await scope.ServiceProvider.GetRequiredService<IDbInitializer>().InitializeAsync();
 }
+
 // Configure the HTTP request pipeline.
 app.UseExceptionHandlerMiddleware();
 app.UseRequestTimeHandlerMiddleware();
+app.UseCors("FrontEndClients");
 
 if (app.Environment.IsDevelopment())
 {
@@ -58,9 +67,17 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthorization();
 
-app.MapControllers();
-
+app.UseEndpoints(configure => 
+{
+    configure.MapControllers();
+});
 app.Run();
+
+
+
+
 

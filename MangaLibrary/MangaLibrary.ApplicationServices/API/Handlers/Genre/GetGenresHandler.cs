@@ -23,9 +23,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
             _executor = executor;
         }
         public async Task<GetGenresResponse> Handle(GetGenresRequest request, CancellationToken cancellationToken)
-        {
-            throw new ArgumentNullException();
-           
+        {          
             var query = new GetGenresQuery();
             var result = await _executor.Execute(query);
             var response = new GetGenresResponse()
