@@ -8,24 +8,22 @@ namespace MangaLibrary.ApplicationServices.API.ErrorHandling
 {
     public static class ErrorType
     {
-        public const string InternalServerError = "Intenal_server_error";
+        public const string InternalServerError = "intenal_server_error";
 
-        public const string ValidationError = "Validation_error";
+        public const string ValidationError = "validation_error";
 
-        public const string NotAuthenticated = "Not_authenticated";
+        public const string NotAuthenticated = "not_authenticated";
 
-        public const string Unauthorized = "Unauthorized";
+        public const string Unauthorized = "unauthorized";
 
-        public const string NotFound = "Not_found";
+        public const string NotFound = "not_found";
 
-        public const string unsupportedMediaType= "Unsuported_media_type";
+        public const string unsupportedMediaType= "unsuported_media_type";
 
-        public const string UnsuportedMethod = "Unsuported_method";
+        public const string UnsuportedMethod = "unsuported_method";
 
-        public const string RequestTooLarge = "Request_too_large";
+        public const string RequestTooLarge = "request_too_large";
 
-        public const string TooManyRequests = "Too_many_requests";
-
-
+        public const string TooManyRequests = "too_many_requests";
     }
 }

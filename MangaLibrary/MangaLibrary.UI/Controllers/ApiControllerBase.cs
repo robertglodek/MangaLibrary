@@ -10,10 +10,12 @@ namespace MangaLibrary.UI.Controllers
     public abstract class ApiControllerBase : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<ApiControllerBase> _logger;
 
-        public ApiControllerBase(IMediator mediator)
+        public ApiControllerBase(IMediator mediator,ILogger<ApiControllerBase> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
 
@@ -31,7 +33,11 @@ namespace MangaLibrary.UI.Controllers
             var response = await _mediator.Send(request);
 
             if(response.Error != null)
+            {
+                _logger.LogInformation(response.Error.ToString());
                 return ErrorResponse(response.Error);
+            }
+               
 
             return Ok(response);
         }

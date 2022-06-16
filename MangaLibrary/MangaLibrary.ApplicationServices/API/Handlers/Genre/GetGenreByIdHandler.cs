@@ -29,7 +29,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
             var result = await _executor.Execute(query);
             if(result==null)
             {
-                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound) };
+                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound,$"Genre with id: {request.Id} doesn't exist") };
             }
 
             var response = new GetGenreByIdResponse()

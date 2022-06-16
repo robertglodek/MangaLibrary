@@ -1,5 +1,4 @@
 using FluentValidation.AspNetCore;
-using MangaLibrary.ApplicationServices;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Queries;
@@ -10,14 +9,14 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
-using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Logging.AddConsole();
 builder.Host.UseNLog();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddMediatR(typeof(GetGenreByIdRequest).Assembly);

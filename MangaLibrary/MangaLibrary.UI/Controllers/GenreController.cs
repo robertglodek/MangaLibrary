@@ -9,10 +9,10 @@ namespace MangaLibrary.UI.Controllers
     [ApiController]
     public class GenreController : ApiControllerBase
     {
-        public GenreController(IMediator mediator):base(mediator)
+        public GenreController(IMediator mediator,ILogger<GenreController> logger):base(mediator,logger)
         {
-        }
 
+        }
         [HttpGet]
         public Task<IActionResult> Get()
         {
@@ -44,8 +44,5 @@ namespace MangaLibrary.UI.Controllers
         {
             return this.HandleRequest<DeleteGenreRequest, DeleteGenreResponse>(request); 
         }
-
-    }
-
- 
+    } 
 }
