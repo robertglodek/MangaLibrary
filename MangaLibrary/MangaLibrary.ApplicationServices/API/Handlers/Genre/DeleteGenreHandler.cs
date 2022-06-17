@@ -1,4 +1,5 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain.Genre;
+using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Commands.Genre;
 using MediatR;
@@ -24,8 +25,9 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         {
             var command = new DeleteGenreCommand() { Parameter= request.Id };
             var result=await _executor.Execute(command);
-            var response = new DeleteGenreResponse() { Data = result };
-            return response;
+            if(!result.IsSuccess)
+                return new DeleteGenreResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, result.ErrorMessage) };
+            return new DeleteGenreResponse() { Data = result.Value };
         }
     }
 }

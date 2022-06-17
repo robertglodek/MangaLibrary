@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
+using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Commands.Genre;
 using MediatR;
@@ -26,8 +27,10 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
             var genre = _mapper.Map<MangaLibrary.DataAccess.Entities.Genre>(request);
             var command = new UpdateGenreCommand() { Parameter = genre };
             var result = await _executor.Execute(command);
-            var response = new UpdateGenreResponse() { Data=result };
-            return response;
+            if (!result.IsSuccess)
+                return new UpdateGenreResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, result.ErrorMessage) };
+            return new UpdateGenreResponse() { Data=result.Value };
+           
         }
     }
 }

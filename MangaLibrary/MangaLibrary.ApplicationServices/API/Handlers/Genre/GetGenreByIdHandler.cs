@@ -27,16 +27,9 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         {
             var query = new GetGenreQuery() { Id=request.Id };
             var result = await _executor.Execute(query);
-            if(result==null)
-            {
-                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound,$"Genre with id: {request.Id} doesn't exist") };
-            }
-
-            var response = new GetGenreByIdResponse()
-            {
-                Data = _mapper.Map<GenreDTO>(result)
-            };
-            return response;
+            if(!result.IsSuccess)
+                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, result.ErrorMessage)};
+            return new GetGenreByIdResponse() { Data = _mapper.Map<GenreDTO>(result.Value) };
         }
     }
 

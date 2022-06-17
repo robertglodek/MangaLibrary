@@ -25,15 +25,10 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         }
         public async Task<AddGenreResponse> Handle(AddGenreRequest request, CancellationToken cancellationToken)
         {
-
             var genre = _mapper.Map<MangaLibrary.DataAccess.Entities.Genre>(request);
             var command = new AddGenreCommand() { Parameter = genre };
             var result= await _executor.Execute(command);
-            var response = new AddGenreResponse() 
-            {
-                Data= _mapper.Map<GenreDTO>(result)
-            };
-            return response;
+            return new AddGenreResponse() { Data = result.Value };
         }
     }
 }

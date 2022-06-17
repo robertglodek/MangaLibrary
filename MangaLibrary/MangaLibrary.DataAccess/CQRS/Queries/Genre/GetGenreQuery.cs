@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.DataAccess.CQRS.Queries.Genre
 {
-    public class GetGenreQuery : QueryBase<MangaLibrary.DataAccess.Entities.Genre>
+    public class GetGenreQuery : QueryBase<Result<MangaLibrary.DataAccess.Entities.Genre>>
     {
         public Guid Id { get; set; }
-        public async override Task<Entities.Genre> Execute(MangaLibraryDbContext context)
+        public async override Task<Result<MangaLibrary.DataAccess.Entities.Genre>> Execute(MangaLibraryDbContext context)
         {
             var genre= await context.Genres.FirstOrDefaultAsync(x=>x.Id==Id);
-            return genre;
+            if(genre==null)
+                return Result<MangaLibrary.DataAccess.Entities.Genre>.Fail($"Genre with id: {Id} doesn't exist");
+            return Result<MangaLibrary.DataAccess.Entities.Genre>.Success(genre);
         }
     }
 }

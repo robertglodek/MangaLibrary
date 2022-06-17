@@ -11,6 +11,28 @@ namespace MangaLibrary.UI.Controllers
         public UserController(IMediator mediator, ILogger<UserController> logger) : base(mediator, logger)
         {
 
+
+
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public Task<IActionResult> Register()
+        {
+
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public Task<IActionResult> Register()
+        {
+
+        }
+
+        [HttpGet]
+        public Task<IActionResult> GetAll()
+        {
+
         }
 
     }

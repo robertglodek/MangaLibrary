@@ -26,11 +26,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         {          
             var query = new GetGenresQuery();
             var result = await _executor.Execute(query);
-            var response = new GetGenresResponse()
-            {
-                Data = _mapper.Map<List<GenreDTO>>(result)
-            };
-            return response;
+            return new GetGenresResponse() { Data = _mapper.Map<List<GenreDTO>>(result.Value) };
         }
     }
 }

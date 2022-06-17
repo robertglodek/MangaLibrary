@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.DataAccess.CQRS.Queries.Genre
 {
-    public class GetGenresQuery : QueryBase<List<MangaLibrary.DataAccess.Entities.Genre>>
+    public class GetGenresQuery : QueryBase<Result<List<MangaLibrary.DataAccess.Entities.Genre>>>
     {
-        public async override Task<List<Entities.Genre>> Execute(MangaLibraryDbContext context)
-        {
-            return await context.Genres.ToListAsync();
+        public async override Task<Result<List<MangaLibrary.DataAccess.Entities.Genre>>> Execute(MangaLibraryDbContext context)
+        {    
+            var result=await context.Genres.ToListAsync();
+            return Result<List<MangaLibrary.DataAccess.Entities.Genre>>.Success(result);
         }
     }
 }

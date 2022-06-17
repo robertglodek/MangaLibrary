@@ -4,8 +4,10 @@ using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.Data;
 using MangaLibrary.DataAccess.Data.Initializer;
+using MangaLibrary.DataAccess.Entities;
 using MangaLibrary.UI.Middleware;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
@@ -25,6 +27,7 @@ builder.Services.AddScoped<IQueryExecutor, QueryExecutor>();
 builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<RequestTimeMiddleware>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MangaLibraryDbContext>(optionsBuilder =>
@@ -45,7 +48,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontEndClients", builder =>
                  builder.AllowAnyMethod().AllowAnyHeader().WithOrigins(allowedOrigins));
 });
-
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
