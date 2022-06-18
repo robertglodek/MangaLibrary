@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Handlers.User
 {
-    public class RegisterUserHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
+    public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, RegisterUserResponse>
     {
         private readonly ICommandExecutor _executor;
         private readonly IMapper _mapper;
         private readonly IPasswordHasher<DataAccess.Entities.User> _passwordHasher;
 
-        public RegisterUserHandler(ICommandExecutor executor,IMapper mapper,
+        public RegisterUserRequestHandler(ICommandExecutor executor,IMapper mapper,
             IPasswordHasher<MangaLibrary.DataAccess.Entities.User> passwordHasher)
         {
             _executor = executor;

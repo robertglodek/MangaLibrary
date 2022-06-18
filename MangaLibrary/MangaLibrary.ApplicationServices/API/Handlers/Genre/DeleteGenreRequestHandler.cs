@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
 {
-    public class DeleteGenreHandler : IRequestHandler<DeleteGenreRequest, DeleteGenreResponse>
+    public class DeleteGenreRequestHandler : IRequestHandler<DeleteGenreRequest, DeleteGenreResponse>
     {
         private readonly ICommandExecutor _executor;
  
 
-        public DeleteGenreHandler(ICommandExecutor executor)
+        public DeleteGenreRequestHandler(ICommandExecutor executor)
         {
             _executor = executor;
            

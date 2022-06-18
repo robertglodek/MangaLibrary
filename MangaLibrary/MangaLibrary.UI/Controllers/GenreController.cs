@@ -14,7 +14,7 @@ namespace MangaLibrary.UI.Controllers
 
         }
         [HttpGet]
-        public Task<IActionResult> Get()
+        public Task<IActionResult> GetAll()
         {
             return this.HandleRequest<GetGenresRequest,GetGenresResponse>(new GetGenresRequest());
         }

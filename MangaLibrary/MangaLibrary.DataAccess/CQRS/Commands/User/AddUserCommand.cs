@@ -1,4 +1,5 @@
-﻿using MangaLibrary.DataAccess.Data;
+﻿using MangaLibrary.DataAccess.CQRS.Models;
+using MangaLibrary.DataAccess.Data;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace MangaLibrary.DataAccess.CQRS.Commands.User
         {
             context.Users.Add(this.Parameter);
             await context.SaveChangesAsync();
-            return Result<Unit>.Success();
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

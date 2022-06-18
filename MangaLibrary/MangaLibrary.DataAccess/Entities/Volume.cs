@@ -10,7 +10,6 @@ namespace MangaLibrary.DataAccess.Entities
     {
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public string ImagePath { get; set; }
         public Guid MangaId { get; set; }
         public Manga Manga { get; set; }
         public string Description { get; set; }

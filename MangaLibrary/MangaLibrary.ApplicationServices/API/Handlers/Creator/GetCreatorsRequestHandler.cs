@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MangaLibrary.ApplicationServices.API.Domain
+namespace MangaLibrary.ApplicationServices.API.Handlers.Creator
 {
-    public class ResponsePagedResult<T>
+    internal class GetCreatorsRequestHandler
     {
-
     }
 }

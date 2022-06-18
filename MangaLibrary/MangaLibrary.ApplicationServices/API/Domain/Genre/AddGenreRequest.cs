@@ -9,6 +9,6 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Genre
 {
     public class AddGenreRequest:IRequest<AddGenreResponse>
     {
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 }

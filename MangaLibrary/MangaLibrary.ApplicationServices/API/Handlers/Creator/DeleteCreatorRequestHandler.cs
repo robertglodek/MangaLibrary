@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MangaLibrary.ApplicationServices.API.Domain.Models
+namespace MangaLibrary.ApplicationServices.API.Handlers.Creator
 {
-    public enum SortDirection
+    internal class DeleteCreatorRequestHandler
     {
-        Ascending,
-        Descending
     }
 }

@@ -1,4 +1,5 @@
-﻿using MangaLibrary.DataAccess.Data;
+﻿using MangaLibrary.DataAccess.CQRS.Models;
+using MangaLibrary.DataAccess.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,7 +19,7 @@ namespace MangaLibrary.DataAccess.CQRS.Commands.Genre
                 return Result<Unit>.Fail($"Genre with id: {this.Parameter} doesn't exist");
             context.Genres.Remove(item);
             await context.SaveChangesAsync();
-            return Result<Unit>.Success();  
+            return Result<Unit>.Success(Unit.Value);  
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MangaLibrary.DataAccess.Entities;
+﻿using MangaLibrary.DataAccess.Data.FixedData;
+using MangaLibrary.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,8 @@ namespace MangaLibrary.DataAccess.Data.Initializer
                 if(!await _dbContext.Roles.AnyAsync())
                 {
                     var roles = new List<Role>();
-                    roles.Add(new Role() { Name="Admin" });
-                    roles.Add(new Role() { Name= "User" });
+                    roles.Add(new Role() { Name=UserRoleType.Admin });
+                    roles.Add(new Role() { Name=UserRoleType.User });
                     await _dbContext.Roles.AddRangeAsync(roles);
                 }
                 if(!await _dbContext.Genres.AnyAsync())

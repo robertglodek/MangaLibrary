@@ -1,4 +1,5 @@
-﻿using MangaLibrary.DataAccess.Data;
+﻿using MangaLibrary.DataAccess.CQRS.Models;
+using MangaLibrary.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

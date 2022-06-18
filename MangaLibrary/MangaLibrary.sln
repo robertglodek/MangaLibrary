@@ -5,9 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaLibrary.UI", "MangaLibrary.UI\MangaLibrary.UI.csproj", "{E637D3B6-1891-4A6F-89C5-25CD1347849D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaLibrary.DataAccess", "MangaLibrary.DataAccess\MangaLibrary.DataAccess.csproj", "{F21240FE-655D-43B7-9893-8F40E099409B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaLibrary.DataAccess", "MangaLibrary.DataAccess\MangaLibrary.DataAccess.csproj", "{F21240FE-655D-43B7-9893-8F40E099409B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaLibrary.ApplicationServices", "MangaLibrary.ApplicationServices\MangaLibrary.ApplicationServices.csproj", "{08DB7756-3061-458B-A74D-5C351F2773B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangaLibrary.ApplicationServices", "MangaLibrary.ApplicationServices\MangaLibrary.ApplicationServices.csproj", "{08DB7756-3061-458B-A74D-5C351F2773B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

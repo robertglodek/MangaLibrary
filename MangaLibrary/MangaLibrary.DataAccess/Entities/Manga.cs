@@ -12,7 +12,6 @@ namespace MangaLibrary.DataAccess.Entities
         public string Description { get; set; }
         public string Publisher { get; set; }
         public string Demographic { get; set; }
-        public string ImagePath { get; set; }
         public IEnumerable<Volume> Volumes { get; set; }
         public IEnumerable<Genre> Genres { get; set; }  
         public IEnumerable<Creator> Creators { get; set; }  

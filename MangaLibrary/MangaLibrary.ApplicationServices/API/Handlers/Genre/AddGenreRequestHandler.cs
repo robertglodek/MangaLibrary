@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
 {
-    public class AddGenreHandler : IRequestHandler<AddGenreRequest, AddGenreResponse>
+    public class AddGenreRequestHandler : IRequestHandler<AddGenreRequest, AddGenreResponse>
     {
         private readonly ICommandExecutor _executor;
         private readonly IMapper _mapper;
 
-        public AddGenreHandler(ICommandExecutor executor,IMapper mapper)
+        public AddGenreRequestHandler(ICommandExecutor executor,IMapper mapper)
         {
             _executor = executor;
             _mapper = mapper;
