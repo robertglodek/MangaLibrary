@@ -14,6 +14,7 @@ namespace MangaLibrary.ApplicationServices.API.Domain
         public int ItemsTo { get; set; }
         public int TotalItemsCount { get; set; }
 
+
         public PagedResult(List<T> items, int totalCount, int pageSize, int pageNumber)
         {
             Items = items;

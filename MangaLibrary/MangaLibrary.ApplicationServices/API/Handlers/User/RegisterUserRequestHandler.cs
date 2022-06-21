@@ -31,7 +31,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
             user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
             var command = new AddUserCommand() { Parameter = user };
             var result = await _executor.Execute(command);
-            return new RegisterUserResponse() { Data = result.Value };
+            return new RegisterUserResponse() { Data = result };
         }
     }
 }

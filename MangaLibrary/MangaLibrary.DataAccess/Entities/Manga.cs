@@ -10,11 +10,15 @@ namespace MangaLibrary.DataAccess.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Publisher { get; set; }
-        public string Demographic { get; set; }
-        public IEnumerable<Volume> Volumes { get; set; }
-        public IEnumerable<Genre> Genres { get; set; }  
-        public IEnumerable<Creator> Creators { get; set; }  
-        public IEnumerable<Review> Reviews { get; set; }     
+        public string Story { get; set; }
+        public string Heroes { get; set; }
+        public string Status { get; set; }
+        public bool AnimeAdaptation { get; set; }
+        public Guid DemographicId { get; set; }
+        public Demographic Demographic { get; set; }
+        public List<Volume> Volumes { get; set; }
+        public List<Genre> Genres { get; set; }  
+        public List<Creator> Creators { get; set; }  
+        public List<Review> Reviews { get; set; }     
     }
 }

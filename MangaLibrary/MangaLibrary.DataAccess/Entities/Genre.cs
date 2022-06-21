@@ -9,6 +9,6 @@ namespace MangaLibrary.DataAccess.Entities
     public class Genre:EntityBase
     {
         public string Name { get; set; }
-        public IEnumerable<Manga> Mangas { get; set; }
+        public List<Manga> Mangas { get; set; }
     }
 }

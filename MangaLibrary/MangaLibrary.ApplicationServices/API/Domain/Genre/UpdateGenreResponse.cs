@@ -1,4 +1,4 @@
-﻿using MangaLibrary.ApplicationServices.API.Domain.Models;
+﻿using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Genre
 {
-    public class UpdateGenreResponse:ResponseBase<Unit>
+    public class UpdateGenreResponse:ResponseBase<GenreDTO>
     {
     }
 }

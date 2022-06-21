@@ -36,23 +36,22 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
         {
 
             var result = await _executor.Execute(new GetUserByEmailQuery() { Email = request.Email });
-            if (!result.IsSuccess)
-                return new LoginUserResponse() { Error= new Domain.ErrorModel(ErrorType.BadRequestError, "Invalid username or password")  };
-
-            var verifyResult = _passwordHasher.VerifyHashedPassword(result.Value, result.Value.PasswordHash, request.Password);
+            if(result==null)
+                return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.BadRequestError, "Invalid username or password") };        
+            var verifyResult = _passwordHasher.VerifyHashedPassword(result, result.PasswordHash, request.Password);
             if(verifyResult== PasswordVerificationResult.Failed)
                 return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.BadRequestError, "Invalid username or password") };
 
             var claims = new List<Claim>() 
             {
-                new Claim(ClaimTypes.Email,result.Value.Email),
-                new Claim(ClaimTypes.NameIdentifier,result.Value.Id.ToString()),
-                new Claim(ClaimTypes.Name,$"{result.Value.FirstName} {result.Value.LastName}" ),
-                new Claim(ClaimTypes.Role,result.Value.Role.Name),
-                new Claim("Nationality",result.Value.Nationality)
+                new Claim(ClaimTypes.Email,result.Email),
+                new Claim(ClaimTypes.NameIdentifier,result.Id.ToString()),
+                new Claim(ClaimTypes.Name,$"{result.FirstName} {result.LastName}" ),
+                new Claim(ClaimTypes.Role,result.Role.Name),
+                new Claim("Nationality",result.Nationality)
             };
-            if (result.Value.DateOfBirth != null)
-                new Claim("DateOfBirth", result.Value.DateOfBirth.Value.ToString(CultureInfo.InvariantCulture));
+            if (result.DateOfBirth != null)
+                new Claim("DateOfBirth", result.DateOfBirth.Value.ToString(CultureInfo.InvariantCulture));
 
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.Value.JwtKey));

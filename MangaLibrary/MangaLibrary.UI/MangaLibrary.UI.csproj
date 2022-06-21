@@ -30,4 +30,8 @@
     <ProjectReference Include="..\MangaLibrary.DataAccess\MangaLibrary.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

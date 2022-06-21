@@ -11,7 +11,7 @@ namespace MangaLibrary.DataAccess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public IEnumerable<Manga> Mangas { get; set; }
+        public List<Manga> Mangas { get; set; }
         public string Description { get; set; }
     }
 }

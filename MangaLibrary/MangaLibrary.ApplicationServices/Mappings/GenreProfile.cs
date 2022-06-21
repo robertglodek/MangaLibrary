@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
-using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MangaLibrary.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,6 @@ namespace MangaLibrary.ApplicationServices.Mappings
     {
         public GenreProfile()
         {
-            CreateMap<Genre, GenreDTO>()
-                .ForMember(n=>n.Id,y=>y.MapFrom(s=>s.Id))
-                .ForMember(n=>n.Name,y=>y.MapFrom(s=>s.Name));
-
             CreateMap<AddGenreRequest, Genre>()
                 .ForMember(n => n.Name, s => s.MapFrom(y => y.Name));
 
@@ -25,6 +21,9 @@ namespace MangaLibrary.ApplicationServices.Mappings
                 .ForMember(n => n.Id, y => y.MapFrom(s => s.Id))
                 .ForMember(n => n.Name, y => y.MapFrom(s => s.Name));
 
+            CreateMap<Genre, GenreDTO>()
+               .ForMember(n => n.Id, y => y.MapFrom(s => s.Id))
+               .ForMember(n => n.Name, y => y.MapFrom(s => s.Name));
         }
     }
 }

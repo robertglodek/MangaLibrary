@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MangaLibrary.DataAccess.CQRS.Queries.Creator
 {
 
-    public class GetCreatorsQuery : QueryBase<Result<PagedResult<MangaLibrary.DataAccess.Entities.Creator>>>
+    public class GetCreatorsQuery : QueryBase<PagedResult<MangaLibrary.DataAccess.Entities.Creator>>
     {
         public string SearchPhrase { get; set; }
         public int PageNumber { get; set; }
@@ -19,7 +19,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Creator
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
 
-        public async override Task<Result<PagedResult<MangaLibrary.DataAccess.Entities.Creator>>> Execute(MangaLibraryDbContext context)
+        public async override Task<PagedResult<MangaLibrary.DataAccess.Entities.Creator>> Execute(MangaLibraryDbContext context)
         {
             var baseQuery = context
                 .Creators
@@ -37,9 +37,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Creator
                     { nameof(MangaLibrary.DataAccess.Entities.Creator.LastName), n => n.LastName },
                     { nameof(MangaLibrary.DataAccess.Entities.Creator.DateOfBirth), n => n.DateOfBirth}, 
                 };
-
                 var selectedColumn = columnsSelectors[SortBy];
-
                 baseQuery = SortDirection == SortDirection.Ascending
                     ? baseQuery.OrderBy(selectedColumn)
                     : baseQuery.OrderByDescending(selectedColumn);
@@ -49,7 +47,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Creator
                 .Take(PageSize)
                 .ToListAsync();
             var totalItemsCount = baseQuery.Count();
-            return Result<PagedResult<Entities.Creator>>.Success(new PagedResult<Entities.Creator>(creators, totalItemsCount, PageSize, PageNumber));
+            return new PagedResult<Entities.Creator>(creators, totalItemsCount, PageSize, PageNumber);
         }
     }
 }

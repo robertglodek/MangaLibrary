@@ -13,6 +13,6 @@ namespace MangaLibrary.DataAccess.Entities
         public Guid MangaId { get; set; }
         public Manga Manga { get; set; }
         public string Description { get; set; }
-        public string Publisher { get; set; }
+        public string Arc { get; set; }
     }
 }

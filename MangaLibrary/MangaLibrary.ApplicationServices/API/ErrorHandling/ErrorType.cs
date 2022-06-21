@@ -10,7 +10,7 @@ namespace MangaLibrary.ApplicationServices.API.ErrorHandling
     {
         public const string BadRequestError = "bad_request";
 
-        public const string InternalServerError = "intenal_server_error";
+        public const string publicServerError = "intenal_server_error";
 
         public const string ValidationError = "validation_error";
 

@@ -17,7 +17,7 @@ namespace MangaLibrary.ApplicationServices.API.Validators.User
             {
                 var emailInUse = context.Users.Any(n => n.Email == value);
                 if (emailInUse)
-                    validationContext.AddFailure("Name", "That email is taken");
+                    validationContext.AddFailure("Email", "That email is taken");
             });
             RuleFor(n => n.Password).NotEmpty().MinimumLength(5).MaximumLength(50);
             RuleFor(n => n.ConfirmPassword).Equal(n =>n.Password);

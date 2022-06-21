@@ -21,6 +21,14 @@ namespace MangaLibrary.DataAccess.Data
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
                 n.HasMany(n => n.Mangas).WithMany(n => n.Creators);
             });
+            builder.Entity<Demographic>(n =>
+            {
+                n.HasKey(n => n.Id);
+                n.Property(n => n.Value).IsRequired().HasMaxLength(50);
+                n.Property(n => n.Description).IsRequired().HasMaxLength(100);
+                n.HasMany(n => n.Mangas).WithOne(n => n.Demographic).HasForeignKey(n => n.DemographicId);
+               
+            });
             builder.Entity<Genre>(n => 
             {
                 n.HasKey(n => n.Id);
@@ -31,12 +39,13 @@ namespace MangaLibrary.DataAccess.Data
             {
                 n.HasKey(n => n.Id);
                 n.Property(n => n.Name).IsRequired().HasMaxLength(100);
-                n.Property(n => n.Demographic).IsRequired().HasMaxLength(40);
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
-                n.Property(n => n.Publisher).IsRequired().HasMaxLength(40);
+                n.Property(n => n.Story).IsRequired().HasMaxLength(500);
+                n.Property(n => n.Heroes).IsRequired().HasMaxLength(500);
+                n.Property(n => n.Status).IsRequired().HasMaxLength(40);
                 n.HasMany(n => n.Volumes).WithOne(n => n.Manga).HasForeignKey(n => n.MangaId);
                 n.HasMany(n => n.Reviews).WithOne(n => n.Manga).HasForeignKey(n => n.MangaId);
-            });
+    });
             builder.Entity<Review>(n =>
             {
                 n.HasKey(n => n.Id);
@@ -65,7 +74,7 @@ namespace MangaLibrary.DataAccess.Data
                 n.HasKey(n => n.Id);
                 n.Property(n => n.Name).IsRequired().HasMaxLength(100);
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
-                n.Property(n => n.Publisher).IsRequired().HasMaxLength(50);
+                n.Property(n => n.Arc).IsRequired().HasMaxLength(50);
             });
 
             return builder;

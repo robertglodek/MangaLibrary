@@ -1,4 +1,4 @@
-﻿using MangaLibrary.ApplicationServices.API.Domain.Models;
+﻿using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -14,6 +14,5 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Creator
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Description { get; set; }
-        public string Nationality { get; set; }
     }
 }

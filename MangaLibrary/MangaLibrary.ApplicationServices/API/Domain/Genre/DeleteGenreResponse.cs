@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Genre
 {
-    public class DeleteGenreResponse : ResponseBase<Unit>
+    public class DeleteGenreResponse : ResponseBase<Guid?>
     {
 
     }

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
-using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Queries;
+using MangaLibrary.DataAccess.CQRS.Queries.Generic;
 using MangaLibrary.DataAccess.CQRS.Queries.Genre;
 using MediatR;
 using System;
@@ -25,11 +26,11 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
         }
         public async Task<GetGenreByIdResponse> Handle(GetGenreByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetGenreQuery() { Id=request.Id };
+            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Genre>() { Id = request.Id };
             var result = await _executor.Execute(query);
-            if(!result.IsSuccess)
-                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, result.ErrorMessage)};
-            return new GetGenreByIdResponse() { Data = _mapper.Map<GenreDTO>(result.Value) };
+            if (result == null)
+                return new GetGenreByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Genre with id: {request.Id} doesn't exist") };
+            return new GetGenreByIdResponse() { Data = _mapper.Map<GenreDTO>(result) };
         }
     }
 

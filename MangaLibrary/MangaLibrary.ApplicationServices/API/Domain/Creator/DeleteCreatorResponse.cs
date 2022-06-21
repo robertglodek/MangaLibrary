@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Creator
 {
-    public class DeleteCreatorResponse:ResponseBase<Unit>
+    public class DeleteCreatorResponse:ResponseBase<Guid?>
     {
     }
 }

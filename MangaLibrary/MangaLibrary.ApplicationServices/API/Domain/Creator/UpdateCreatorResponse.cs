@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using MangaLibrary.ApplicationServices.API.Domain.Models.Creator;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Creator
 {
-    public class UpdateCreatorResponse:ResponseBase<Unit>
+    public class UpdateCreatorResponse:ResponseBase<CreatorDTO>
     {
     }
 }

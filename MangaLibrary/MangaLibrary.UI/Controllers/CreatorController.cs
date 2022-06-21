@@ -1,4 +1,5 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain.Creator;
+using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,22 +12,20 @@ namespace MangaLibrary.UI.Controllers
     {
         public CreatorController(IMediator mediator, ILogger<CreatorController> logger):base(mediator, logger)
         {
-
         }
 
+        [HttpGet]
+        public Task<IActionResult> GetAll([FromQuery] GetCreatorsRequest request)
+        {
+            return this.HandleRequest<GetCreatorsRequest, GetCreatorsResponse>(request);
+        }
 
-        //[HttpGet]
-        //public Task<IActionResult> GetAll()
-        //{
-        //    return this.HandleRequest<GetGenresRequest, GetGenresResponse>(new GetGenresRequest());
-        //}
-
-        //[HttpGet]
-        //[Route("{Id}")]
-        //public Task<IActionResult> Get([FromRoute] GetGenreByIdRequest request)
-        //{
-        //    return this.HandleRequest<GetGenreByIdRequest, GetGenreByIdResponse>(request);
-        //}
+        [HttpGet]
+        [Route("{Id}")]
+        public Task<IActionResult> Get([FromRoute] GetCreatorByIdRequest request)
+        {
+            return this.HandleRequest<GetCreatorByIdRequest, GetCreatorByIdResponse>(request);
+        }
 
         [HttpPost]
         public Task<IActionResult> Add([FromBody] AddCreatorRequest request)
@@ -34,20 +33,17 @@ namespace MangaLibrary.UI.Controllers
             return this.HandleRequest<AddCreatorRequest, AddCreatorResponse>(request);
         }
 
-        //[HttpPut]
-        //public Task<IActionResult> Update([FromBody] UpdateGenreRequest request)
-        //{
-        //    return this.HandleRequest<UpdateGenreRequest, UpdateGenreResponse>(request);
-        //}
+        [HttpPut]
+        public Task<IActionResult> Update([FromBody] UpdateCreatorRequest request)
+        {
+            return this.HandleRequest<UpdateCreatorRequest, UpdateCreatorResponse>(request);
+        }
 
-        //[HttpDelete]
-        //[Route("{Id}")]
-        //public Task<IActionResult> Delete([FromRoute] DeleteGenreRequest request)
-        //{
-        //    return this.HandleRequest<DeleteGenreRequest, DeleteGenreResponse>(request);
-        //}
-
-
-
+        [HttpDelete]
+        [Route("{Id}")]
+        public Task<IActionResult> Delete([FromRoute] DeleteCreatorRequest request)
+        {
+            return this.HandleRequest<DeleteCreatorRequest, DeleteCreatorResponse>(request);
+        }
     }
 }

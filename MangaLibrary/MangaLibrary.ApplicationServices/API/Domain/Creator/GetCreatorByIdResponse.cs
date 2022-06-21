@@ -1,4 +1,4 @@
-﻿using MangaLibrary.ApplicationServices.API.Domain.Models;
+﻿using MangaLibrary.ApplicationServices.API.Domain.Models.Creator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Creator
 {
-    public class GetCreatorByIdResponse:ResponseBase<CreatorDTO>
+    public class GetCreatorByIdResponse:ResponseBase<CreatorDetailsDTO>
     {
     }
 }

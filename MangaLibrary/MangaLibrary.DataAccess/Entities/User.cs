@@ -17,6 +17,6 @@ namespace MangaLibrary.DataAccess.Entities
         public DateTime? DateOfBirth { get; set; }
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
-        public IEnumerable<Review> Reviews { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

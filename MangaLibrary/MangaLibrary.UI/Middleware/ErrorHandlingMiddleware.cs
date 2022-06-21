@@ -23,7 +23,7 @@ namespace MangaLibrary.UI.Middleware
             { 
                 _logger.LogError(exception,exception.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                var errorModel = new ErrorModel(ErrorType.InternalServerError);
+                var errorModel = new ErrorModel(ErrorType.publicServerError);
                 await context.Response.WriteAsJsonAsync(errorModel);
             }
         }

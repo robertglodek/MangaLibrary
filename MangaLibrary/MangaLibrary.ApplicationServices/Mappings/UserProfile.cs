@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.Domain.Models.User;
 using MangaLibrary.ApplicationServices.API.Domain.User;
 using MangaLibrary.DataAccess.Entities;
 using System;

@@ -11,16 +11,14 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Creator
 {
     public class AddCreatorRequestValidator:AbstractValidator<AddCreatorRequest>
     {
-        public AddCreatorRequestValidator(MangaLibraryDbContext context)
+        public AddCreatorRequestValidator()
         {
 
             RuleFor(n => n.FirstName).NotEmpty().MaximumLength(40);
             RuleFor(n => n.LastName).NotEmpty().MaximumLength(40);
-            RuleFor(n => n.Nationality).NotEmpty().MaximumLength(40);
             RuleFor(n => n.Description).NotEmpty().MaximumLength(500);
            
         }
-
-       
+  
     }
 }

@@ -24,10 +24,10 @@ namespace MangaLibrary.UI.Controllers
             where TResponse: ErrorResponseBase
         {
             if(!this.ModelState.IsValid)
-            {
+            {   
                 return this.BadRequest(this.ModelState
                     .Where(x=>x.Value.Errors.Any())
-                    .Select(x=>new { property=x.Key, errors= x.Value.Errors }));
+                    .Select(x=>new { property=x.Key, errors= x.Value.Errors.Select(n=>n.ErrorMessage)}));
             }
 
             var response = await _mediator.Send(request);

@@ -21,6 +21,7 @@ namespace MangaLibrary.DataAccess.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Volume> Volumes { get; set; }
         public DbSet<Creator> Creators { get; set; }
+        public DbSet<Demographic> Demographics { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.DataAccess.CQRS.Queries.User
 {
-    public class GetUsersQuery : QueryBase<Result<PagedResult<MangaLibrary.DataAccess.Entities.User>>>
+    public class GetUsersQuery : QueryBase<PagedResult<MangaLibrary.DataAccess.Entities.User>>
     {
         public string SearchPhrase { get; set; }
         public int PageNumber { get; set; }
@@ -18,7 +18,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.User
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
 
-        public async override Task<Result<PagedResult<MangaLibrary.DataAccess.Entities.User>>> Execute(MangaLibraryDbContext context)
+        public async override Task<PagedResult<MangaLibrary.DataAccess.Entities.User>> Execute(MangaLibraryDbContext context)
         {
             var baseQuery = context
                 .Users
@@ -37,6 +37,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.User
                     { nameof(MangaLibrary.DataAccess.Entities.User.LastName), n => n.LastName },
                     { nameof(MangaLibrary.DataAccess.Entities.User.DateOfBirth), n => n.DateOfBirth},
                     { nameof(MangaLibrary.DataAccess.Entities.User.Nationality), n => n.Nationality},
+                    { nameof(MangaLibrary.DataAccess.Entities.User.Email), n => n.Email}
                 };
 
                 var selectedColumn = columnsSelectors[SortBy];
@@ -50,7 +51,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.User
                 .Take(PageSize)
                 .ToListAsync();
             var totalItemsCount = baseQuery.Count();
-            return Result<PagedResult<Entities.User>>.Success(new PagedResult<Entities.User>(users, totalItemsCount, PageSize, PageNumber));
+            return new PagedResult<Entities.User>(users, totalItemsCount, PageSize, PageNumber);
         }
     }
 }

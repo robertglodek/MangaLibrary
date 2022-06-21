@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Creator;
-using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.Domain.Models.Creator;
 using MangaLibrary.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,15 +22,25 @@ namespace MangaLibrary.ApplicationServices.Mappings
 
 
             CreateMap<UpdateCreatorRequest, Creator>()
+                .ForMember(n => n.Id, y => y.MapFrom(s => s.Id))
                 .ForMember(n => n.FirstName, y => y.MapFrom(s => s.FirstName))
                 .ForMember(n => n.LastName, y => y.MapFrom(s => s.LastName))
                 .ForMember(n => n.DateOfBirth, y => y.MapFrom(s => s.DateOfBirth))
                 .ForMember(n => n.Description, y => y.MapFrom(s => s.Description));
 
             CreateMap<Creator, CreatorDTO>()
+                .ForMember(n => n.Id, y => y.MapFrom(s => s.Id))
                 .ForMember(n => n.FirstName, y => y.MapFrom(s => s.FirstName))
                 .ForMember(n => n.LastName, y => y.MapFrom(s => s.LastName))
                 .ForMember(n => n.DateOfBirth, y => y.MapFrom(s => s.DateOfBirth))
+                .ForMember(n => n.Description, y => y.MapFrom(s => s.Description));
+
+            CreateMap<Creator, CreatorDetailsDTO>()
+                .ForMember(n => n.Id, y => y.MapFrom(s => s.Id))
+                .ForMember(n => n.FirstName, y => y.MapFrom(s => s.FirstName))
+                .ForMember(n => n.LastName, y => y.MapFrom(s => s.LastName))
+                .ForMember(n => n.DateOfBirth, y => y.MapFrom(s => s.DateOfBirth))
+                .ForMember(n => n.Mangas, y => y.MapFrom(s => s.Mangas))
                 .ForMember(n => n.Description, y => y.MapFrom(s => s.Description));
         }
     }

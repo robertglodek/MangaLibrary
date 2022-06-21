@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
-using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MangaLibrary.DataAccess.CQRS.Queries;
+using MangaLibrary.DataAccess.CQRS.Queries.Generic;
 using MangaLibrary.DataAccess.CQRS.Queries.Genre;
 using MediatR;
 using System;
@@ -23,10 +24,10 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Genre
             _executor = executor;
         }
         public async Task<GetGenresResponse> Handle(GetGenresRequest request, CancellationToken cancellationToken)
-        {          
-            var query = new GetGenresQuery();
+        {
+            var query = new GetResourcesQuery<MangaLibrary.DataAccess.Entities.Genre>();
             var result = await _executor.Execute(query);
-            return new GetGenresResponse() { Data = _mapper.Map<List<GenreDTO>>(result.Value) };
+            return new GetGenresResponse() { Data = _mapper.Map<List<GenreDTO>>(result) };
         }
     }
 }
