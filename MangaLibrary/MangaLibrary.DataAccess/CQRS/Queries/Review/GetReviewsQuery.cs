@@ -13,6 +13,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Review
    
     public class GetReviewsQuery : QueryBase<PagedResult<MangaLibrary.DataAccess.Entities.Review>>
     {
+        public Guid MangaId { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string SortBy { get; set; }
@@ -22,7 +23,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Review
         {
             IQueryable<Entities.Review> baseQuery = context
                 .Reviews
-                .Include(n => n.Author);
+                .Include(n => n.Author).Where(n=>n.MangaId==MangaId);
                 
 
             if (!string.IsNullOrEmpty(SortBy))

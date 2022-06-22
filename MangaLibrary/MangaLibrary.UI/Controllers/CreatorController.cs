@@ -1,6 +1,7 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain.Creator;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,20 +11,22 @@ namespace MangaLibrary.UI.Controllers
     [ApiController]
     public class CreatorController : ApiControllerBase
     {
-        public CreatorController(IMediator mediator, ILogger<CreatorController> logger):base(mediator, logger)
+        public CreatorController(IMediator mediator, ILogger<CreatorController> logger) : base(mediator, logger)
         {
         }
 
         [HttpGet]
+        [Authorize]
         public Task<IActionResult> GetAll([FromQuery] GetCreatorsRequest request)
         {
             return this.HandleRequest<GetCreatorsRequest, GetCreatorsResponse>(request);
         }
 
         [HttpGet]
-        [Route("{Id}")]
-        public Task<IActionResult> Get([FromRoute] GetCreatorByIdRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Get([FromRoute] Guid id)
         {
+            var request = new GetCreatorByIdRequest() { Id = id };
             return this.HandleRequest<GetCreatorByIdRequest, GetCreatorByIdResponse>(request);
         }
 
@@ -34,15 +37,18 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut]
-        public Task<IActionResult> Update([FromBody] UpdateCreatorRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Update([FromBody] UpdateCreatorRequest request,[FromRoute]Guid id)
         {
+            request.Id= id;
             return this.HandleRequest<UpdateCreatorRequest, UpdateCreatorResponse>(request);
         }
 
         [HttpDelete]
-        [Route("{Id}")]
-        public Task<IActionResult> Delete([FromRoute] DeleteCreatorRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            var request = new DeleteCreatorRequest() { Id=id};
             return this.HandleRequest<DeleteCreatorRequest, DeleteCreatorResponse>(request);
         }
     }

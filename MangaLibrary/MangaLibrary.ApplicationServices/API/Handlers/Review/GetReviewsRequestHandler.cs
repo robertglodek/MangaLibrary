@@ -27,6 +27,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Review
         {
             var query = new GetReviewsQuery()
             {
+                MangaId=request.MangaId,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,
                 SortBy = request.SortBy,

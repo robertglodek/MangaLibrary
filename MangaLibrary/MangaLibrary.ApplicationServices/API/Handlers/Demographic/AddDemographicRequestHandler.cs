@@ -2,7 +2,6 @@
 using MangaLibrary.ApplicationServices.API.Domain.Demographic;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Demographic;
 using MangaLibrary.DataAccess.CQRS.Commands;
-using MangaLibrary.DataAccess.CQRS.Commands.Demographic;
 using MangaLibrary.DataAccess.CQRS.Commands.Generic;
 using MediatR;
 using System;

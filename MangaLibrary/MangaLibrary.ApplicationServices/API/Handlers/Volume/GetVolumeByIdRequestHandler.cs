@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace MangaLibrary.ApplicationServices.API.Handlers.Volume
 {
    
-
     public class GetVolumeByIdRequestHandler : IRequestHandler<GetVolumeByIdRequest, GetVolumeByIdResponse>
     {
         private readonly IQueryExecutor _executor;

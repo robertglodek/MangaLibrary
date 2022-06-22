@@ -6,6 +6,7 @@ using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.Data;
 using MangaLibrary.DataAccess.Data.Initializer;
 using MangaLibrary.DataAccess.Entities;
+using MangaLibrary.UI.Filters;
 using MangaLibrary.UI.Middleware;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,7 +37,10 @@ builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<RequestTimeMiddleware>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(n => 
+{
+    n.SchemaFilter<SwaggerSchemaFilter>();
+});
 builder.Services.Configure<AuthenticationSettings>(builder.Configuration.GetSection("Authentication"));
 builder.Services.AddDbContext<MangaLibraryDbContext>(optionsBuilder =>
 {

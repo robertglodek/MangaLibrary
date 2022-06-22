@@ -14,8 +14,6 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Demographic
     {
         public UpdateDemographicRequestValidator(MangaLibraryDbContext context)
         {
-
-            RuleFor(n => n.Id).NotEmpty();
             RuleFor(n => n.Value).NotEmpty().MaximumLength(50);
             RuleFor(n => n.Description).NotEmpty().MaximumLength(100);
             RuleFor(n => n.Value).Custom((value, validationContext) =>

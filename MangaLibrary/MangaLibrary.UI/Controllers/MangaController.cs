@@ -15,6 +15,20 @@ namespace MangaLibrary.UI.Controllers
         {
         }
 
+        [HttpGet]
+        public Task<IActionResult> GetAll()
+        {
+            return this.HandleRequest<GetMangasRequest, GetMangasResponse>(new GetMangasRequest());
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public Task<IActionResult> Get([FromRoute] Guid id)
+        {
+            var request = new GetMangaByIdRequest() { Id = id };
+            return this.HandleRequest<GetMangaByIdRequest, GetMangaByIdResponse>(request);
+        }
+
         [HttpPost]
         public Task<IActionResult> Add([FromBody] AddMangaRequest request)
         {
@@ -22,15 +36,18 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut]
-        public Task<IActionResult> Update([FromBody] UpdateMangaRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Update([FromBody] UpdateMangaRequest request, [FromRoute] Guid id)
         {
+            request.Id = id;
             return this.HandleRequest<UpdateMangaRequest, UpdateMangaResponse>(request);
         }
 
         [HttpDelete]
-        [Route("{Id}")]
-        public Task<IActionResult> Delete([FromRoute] DeleteMangaRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            var request = new DeleteMangaRequest() { Id = id };
             return this.HandleRequest<DeleteMangaRequest, DeleteMangaResponse>(request);
         }
     }

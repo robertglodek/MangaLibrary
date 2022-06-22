@@ -24,10 +24,15 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Review
         }
         public async Task<DeleteReviewResponse> Handle(DeleteReviewRequest request, CancellationToken cancellationToken)
         {
-            var item = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Review>() { Id = request.Id });
-            if (item == null)
-                return new DeleteReviewResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Review with id: {request.Id} doesn't exist") };
-            var command = new DeleteResourceCommand<MangaLibrary.DataAccess.Entities.Review>() { Parameter = item };
+            var getMangaResult = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.MangaId });
+            if (getMangaResult == null)
+                return new DeleteReviewResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Manga with id: {request.MangaId} doesn't exist") };
+
+            var getReviewResult = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Review>() { Id = request.Id });
+            if (getReviewResult == null || getReviewResult.MangaId != getMangaResult.Id)
+                return new DeleteReviewResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Review with id: {request.MangaId} and mangaId:{request.MangaId}  doesn't exist") };
+
+            var command = new DeleteResourceCommand<MangaLibrary.DataAccess.Entities.Review>() { Parameter = getReviewResult };
             var result = await _commandExecutor.Execute(command);
             return new DeleteReviewResponse() { Data = result };
         }

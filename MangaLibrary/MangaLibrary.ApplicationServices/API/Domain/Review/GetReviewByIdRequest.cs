@@ -10,5 +10,7 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Review
     public class GetReviewByIdRequest:IRequest<GetReviewByIdResponse>
     {
         public Guid Id { get; set; }
+
+        public Guid MangaId { get; set; }
     }
 }

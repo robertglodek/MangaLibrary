@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Manga
 {
     public class UpdateMangaRequest:IRequest<UpdateMangaResponse>
     {
+        [IgnoreDataMember]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -3,6 +3,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,5 +16,8 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Volume
         public int PageSize { get; set; }
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
+
+        [IgnoreDataMember]
+        public Guid MangaId { get; set; }
     }
 }

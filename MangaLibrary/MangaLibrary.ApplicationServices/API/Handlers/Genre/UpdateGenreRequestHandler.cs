@@ -4,7 +4,6 @@ using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Commands.Generic;
-using MangaLibrary.DataAccess.CQRS.Commands.Genre;
 using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.CQRS.Queries.Generic;
 using MediatR;

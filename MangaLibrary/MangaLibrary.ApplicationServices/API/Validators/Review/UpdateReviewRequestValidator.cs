@@ -11,14 +11,11 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Review
 
     public class UpdateReviewRequestValidator : AbstractValidator<UpdateReviewRequest>
     {
-
         public UpdateReviewRequestValidator()
         {
 
-            RuleFor(n => n.Id).NotEmpty();
             RuleFor(n => n.Content).NotEmpty().MaximumLength(200);
             RuleFor(n => n.Rating).NotEmpty().InclusiveBetween(1, 5);
-
         }
     }
 }

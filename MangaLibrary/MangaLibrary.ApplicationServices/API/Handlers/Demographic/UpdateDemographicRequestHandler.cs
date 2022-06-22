@@ -3,7 +3,6 @@ using MangaLibrary.ApplicationServices.API.Domain.Demographic;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Demographic;
 using MangaLibrary.ApplicationServices.API.ErrorHandling;
 using MangaLibrary.DataAccess.CQRS.Commands;
-using MangaLibrary.DataAccess.CQRS.Commands.Demographic;
 using MangaLibrary.DataAccess.CQRS.Commands.Generic;
 using MangaLibrary.DataAccess.CQRS.Queries;
 using MangaLibrary.DataAccess.CQRS.Queries.Generic;

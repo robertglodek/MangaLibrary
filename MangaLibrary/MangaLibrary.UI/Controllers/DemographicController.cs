@@ -21,9 +21,10 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
-        [Route("{Id}")]
-        public Task<IActionResult> Get([FromRoute] GetDemographicByIdRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Get([FromRoute] Guid id)
         {
+            var request = new GetDemographicByIdRequest() { Id = id };
             return this.HandleRequest<GetDemographicByIdRequest, GetDemographicByIdResponse>(request);
         }
 
@@ -34,15 +35,18 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut]
-        public Task<IActionResult> Update([FromBody] UpdateDemographicRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Update([FromBody] UpdateDemographicRequest request,[FromRoute]Guid id)
         {
+            request.Id = id;
             return this.HandleRequest<UpdateDemographicRequest, UpdateDemographicResponse>(request);
         }
 
         [HttpDelete]
-        [Route("{Id}")]
-        public Task<IActionResult> Delete([FromRoute] DeleteDemographicRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            var request = new DeleteDemographicRequest() { Id = id };
             return this.HandleRequest<DeleteDemographicRequest, DeleteDemographicResponse>(request);
         }
     }

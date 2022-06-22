@@ -10,5 +10,6 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Volume
     public class DeleteVolumeRequest : IRequest<DeleteVolumeResponse>
     {
         public Guid Id { get; set; }
+        public Guid MangaId { get; set; }
     }
 }

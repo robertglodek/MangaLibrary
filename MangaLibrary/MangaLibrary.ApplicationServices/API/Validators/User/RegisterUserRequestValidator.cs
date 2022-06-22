@@ -19,10 +19,12 @@ namespace MangaLibrary.ApplicationServices.API.Validators.User
                 if (emailInUse)
                     validationContext.AddFailure("Email", "That email is taken");
             });
-            RuleFor(n => n.Password).NotEmpty().MinimumLength(5).MaximumLength(50);
+            RuleFor(n => n.Password).NotEmpty().MinimumLength(6).MaximumLength(50);
             RuleFor(n => n.ConfirmPassword).Equal(n =>n.Password);
             RuleFor(n => n.Nationality).NotEmpty();
             RuleFor(n => n.RoleId).NotEmpty();
+            RuleFor(n => n.FirstName).NotEmpty().MaximumLength(40);
+            RuleFor(n => n.LastName).NotEmpty().MaximumLength(40);
         }
     }
 }

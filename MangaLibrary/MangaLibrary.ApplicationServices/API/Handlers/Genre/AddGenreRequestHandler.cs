@@ -3,7 +3,6 @@ using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Genre;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Commands.Generic;
-using MangaLibrary.DataAccess.CQRS.Commands.Genre;
 using MangaLibrary.DataAccess.Data;
 using MediatR;
 using System;

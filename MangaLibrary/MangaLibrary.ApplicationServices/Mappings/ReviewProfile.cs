@@ -40,7 +40,6 @@ namespace MangaLibrary.ApplicationServices.Mappings
              .ForMember(n => n.PublishDate, y => y.MapFrom(s => s.PublishDate))
              .ForMember(n => n.Rating, y => y.MapFrom(s => s.Rating))
              .ForMember(n => n.Author, y => y.MapFrom(s => s.Author))
-             .ForMember(n => n.Manga, y => y.MapFrom(s => s.Manga))
              .ForMember(n => n.Content, y => y.MapFrom(s => s.Content));
         }
     }

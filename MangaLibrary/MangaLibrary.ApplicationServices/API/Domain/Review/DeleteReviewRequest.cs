@@ -10,5 +10,6 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Review
     public class DeleteReviewRequest : IRequest<DeleteReviewResponse>
     {
         public Guid Id { get; set; }
+        public Guid MangaId { get; set; }
     }
 }

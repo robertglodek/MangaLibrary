@@ -13,7 +13,6 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Genre
     {
         public UpdateGenreRequestValidator(MangaLibraryDbContext context)
         {
-            RuleFor(x => x.Id).NotEmpty();
             RuleFor(n => n.Name).NotEmpty().MaximumLength(100);
             RuleFor(n => n.Name).Custom((value, validationContext) =>
             {

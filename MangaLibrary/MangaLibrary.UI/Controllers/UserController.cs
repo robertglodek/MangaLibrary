@@ -29,9 +29,10 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
-        [Route("{Id}")]
-        public Task<IActionResult> Get([FromRoute] GetUserByIdRequest request)
+        [Route("{id}")]
+        public Task<IActionResult> Get([FromRoute] Guid id)
         {
+            var request = new GetUserByIdRequest();
             return this.HandleRequest<GetUserByIdRequest, GetUserByIdResponse>(request);
         }
 
@@ -41,22 +42,27 @@ namespace MangaLibrary.UI.Controllers
             return this.HandleRequest<GetUsersRequest, GetUsersResponse>(new GetUsersRequest());
         }
 
+        [HttpPut]
+        [Route("password/{id}")]
+        public Task<IActionResult> ChangePassword([FromRoute]Guid id, [FromBody] UpdatePasswordRequest request)
+        {
+            request.Id = id;
+            return this.HandleRequest<UpdatePasswordRequest, UpdatePasswordResponse>(request);
+        }
 
-
-        //[HttpPut]
-        //[Route("password")]
-        //public Task<IActionResult> ChangePassword()
-        //{
-
-        //}
-
-        //[HttpPut]
-        //public Task<IActionResult> Update()
-        //{
-
-        //}
-
-
-
+        [HttpPut]
+        [Route("{id}")]
+        public Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
+        {
+            request.Id = id;
+            return this.HandleRequest<UpdateUserRequest, UpdateUserResponse>(request);
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var request = new DeleteUserRequest() { Id = id };
+            return this.HandleRequest<DeleteUserRequest, DeleteUserResponse>(request);
+        }
     }
 }

@@ -26,11 +26,15 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Review
         }
         public async Task<GetReviewByIdResponse> Handle(GetReviewByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Review>() { Id = request.Id, PropertiesToInclude = "Author" };
-            var result = await _executor.Execute(query);
-            if (result == null)
-                return new GetReviewByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Review with id: {request.Id} doesn't exist") };
-            return new GetReviewByIdResponse() { Data = _mapper.Map<ReviewDetailsDTO>(result) };
+            var getMangaResult = await _executor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.MangaId });
+            if (getMangaResult == null)
+                return new GetReviewByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Manga with id: {request.MangaId} doesn't exist") };
+
+            var getReviewResult = await _executor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Review>() { Id = request.Id, PropertiesToInclude = "Author" });
+            if (getReviewResult == null || getReviewResult.MangaId!=getMangaResult.Id)
+                return new GetReviewByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Review with id: {request.MangaId} and mangaId:{request.MangaId}  doesn't exist") };
+
+            return new GetReviewByIdResponse() { Data = _mapper.Map<ReviewDetailsDTO>(getReviewResult) };
         }
     }
 }

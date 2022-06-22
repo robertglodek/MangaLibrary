@@ -7,6 +7,7 @@ using System.Net;
 
 namespace MangaLibrary.UI.Controllers
 {
+   
     public abstract class ApiControllerBase : ControllerBase
     {
         private readonly IMediator _mediator;
