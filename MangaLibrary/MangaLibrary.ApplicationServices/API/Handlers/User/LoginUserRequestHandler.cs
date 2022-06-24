@@ -37,10 +37,10 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
 
             var result = await _executor.Execute(new GetUserByEmailQuery() { Email = request.Email });
             if(result==null)
-                return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.BadRequestError, "Invalid username or password") };        
+                return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.NotAuthenticated, "Invalid username or password") };        
             var verifyResult = _passwordHasher.VerifyHashedPassword(result, result.PasswordHash, request.Password);
             if(verifyResult== PasswordVerificationResult.Failed)
-                return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.BadRequestError, "Invalid username or password") };
+                return new LoginUserResponse() { Error = new Domain.ErrorModel(ErrorType.NotAuthenticated, "Invalid username or password") };
 
             var claims = new List<Claim>() 
             {
@@ -51,7 +51,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
                 new Claim("Nationality",result.Nationality)
             };
             if (result.DateOfBirth != null)
-                new Claim("DateOfBirth", result.DateOfBirth.Value.ToString(CultureInfo.InvariantCulture));
+                new Claim("DateOfBirth", result.DateOfBirth.Value.ToString());
 
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.Value.JwtKey));

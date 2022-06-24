@@ -60,27 +60,6 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Manga
             var result = await _commandExecutor.Execute(command);
             return new UpdateMangaResponse() { Data = _mapper.Map<MangaDTO>(result) };
 
-
-
-            //var item = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.Id, PropertiesToInclude="Genres,Creators" });
-            //if (item == null)
-            //    return new UpdateMangaResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Manga with id: {request.Id} doesn't exist") };
-            //item.Genres.RemoveAll(n=>!request.GenresIds.Contains(n.Id));
-            //item.Creators.RemoveAll(n=>!request.CreatorsIds.Contains(n.Id));
-
-            //var genres = await _queryExecutor.Execute(new GetResourcesForQuery<MangaLibrary.DataAccess.Entities.Genre>() 
-            //{ 
-            //    Ids = request.GenresIds.Intersect(item.Genres.Select(n=>n.Id)) 
-            //});
-            //var creators = await _queryExecutor.Execute(new GetResourcesForQuery<MangaLibrary.DataAccess.Entities.Creator>() 
-            //{ 
-            //    Ids = request.CreatorsIds.Intersect(item.Creators.Select(n => n.Id)) 
-            //});
-            //item.Genres.AddRange(genres);
-            //item.Creators.AddRange(creators);
-            //var command = new UpdateResourceCommand<MangaLibrary.DataAccess.Entities.Manga>() { Parameter = _mapper.Map(request, item) };
-            //var result = await _commandExecutor.Execute(command);
-            //return new UpdateMangaResponse() { Data = _mapper.Map<MangaDTO>(result) };
         }
     }
 }

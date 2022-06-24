@@ -1,13 +1,15 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain;
 using MangaLibrary.ApplicationServices.API.ErrorHandling;
+using MangaLibrary.UI.ApiModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Net;
 
 namespace MangaLibrary.UI.Controllers
 {
-   
+    
     public abstract class ApiControllerBase : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,11 +26,15 @@ namespace MangaLibrary.UI.Controllers
             where TRequest : IRequest<TResponse> 
             where TResponse: ErrorResponseBase
         {
-            if(!this.ModelState.IsValid)
+            
+
+            if (!this.ModelState.IsValid)
             {   
-                return this.BadRequest(this.ModelState
-                    .Where(x=>x.Value.Errors.Any())
-                    .Select(x=>new { property=x.Key, errors= x.Value.Errors.Select(n=>n.ErrorMessage)}));
+                IEnumerable<Error> errors= this.ModelState
+                    .Where(x => x.Value.Errors.Any())
+                    .Select(x => new Error() { Property = x.Key, Errors = x.Value.Errors.Select(n => n.ErrorMessage) });
+
+                return this.BadRequest(errors);
             }
 
             var response = await _mediator.Send(request);
@@ -38,7 +44,6 @@ namespace MangaLibrary.UI.Controllers
                 _logger.LogInformation(response.Error.ToString());
                 return ErrorResponse(response.Error);
             }
-               
 
             return Ok(response);
         }
@@ -58,6 +63,12 @@ namespace MangaLibrary.UI.Controllers
             ErrorType.UnsuportedMethod => HttpStatusCode.MethodNotAllowed,
             ErrorType.TooManyRequests => HttpStatusCode.TooManyRequests,
             _=> HttpStatusCode.BadRequest
-        };  
+        }; 
+        
+        public void ReValidateModel(object model)
+        {
+            ModelState.Clear();
+            TryValidateModel(model);
+        }
     }
 }

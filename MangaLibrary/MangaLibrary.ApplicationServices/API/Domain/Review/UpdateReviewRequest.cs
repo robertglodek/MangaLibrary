@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Review
 {
     public class UpdateReviewRequest : IRequest<UpdateReviewResponse>
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public Guid Id { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
         public Guid AuthorId { get; set; }
 
-        [IgnoreDataMember]
+        [JsonIgnore]
         public Guid MangaId { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
 
             var verifyResult = _passwordHasher.VerifyHashedPassword(item, item.PasswordHash, request.OldPassword);
             if (verifyResult == PasswordVerificationResult.Failed)
-                return new UpdatePasswordResponse() { Error = new Domain.ErrorModel(ErrorType.BadRequestError, "Old password invalid") };
+                return new UpdatePasswordResponse() { Error = new Domain.ErrorModel(ErrorType.NotAuthenticated, "Old password invalid") };
 
             item.PasswordHash = _passwordHasher.HashPassword(item, request.NewPassword);
             var command = new UpdateResourceCommand<MangaLibrary.DataAccess.Entities.User>() { Parameter = _mapper.Map(request, item) };

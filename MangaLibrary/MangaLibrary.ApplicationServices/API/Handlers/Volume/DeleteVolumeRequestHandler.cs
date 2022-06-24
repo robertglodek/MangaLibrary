@@ -24,10 +24,14 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Volume
         }
         public async Task<DeleteVolumeResponse> Handle(DeleteVolumeRequest request, CancellationToken cancellationToken)
         {
-            var item = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Volume>() { Id = request.Id });
-            if (item == null)
+            var getMangaResult = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.MangaId });
+            if (getMangaResult == null)
+                return new DeleteVolumeResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Manga with id: {request.MangaId} doesn't exist") };
+
+            var getVolumeResult = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Volume>() { Id = request.Id });
+            if (getVolumeResult == null)
                 return new DeleteVolumeResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Volume with id: {request.Id} doesn't exist") };
-            var command = new DeleteResourceCommand<MangaLibrary.DataAccess.Entities.Volume>() { Parameter = item };
+            var command = new DeleteResourceCommand<MangaLibrary.DataAccess.Entities.Volume>() { Parameter = getVolumeResult };
             var result = await _commandExecutor.Execute(command);
             return new DeleteVolumeResponse() { Data = result };
         }

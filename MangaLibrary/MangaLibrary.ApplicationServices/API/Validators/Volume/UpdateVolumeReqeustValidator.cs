@@ -16,12 +16,11 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Volume
         public UpdateVolumeReqeustValidator(MangaLibraryDbContext context)
         {
             RuleFor(n => n.Name).NotEmpty().MaximumLength(100);
-            RuleFor(n => n.Name).Custom((value, validationContext) =>
+            RuleFor(n => new { n.Name, n.Id }).Custom((value, validationContext) =>
             {
-                var nameInUse = context.Volumes.Any(n => n.Name == value);
+                var nameInUse = context.Volumes.Any(n => n.Name == value.Name && n.Id != value.Id);
                 if (nameInUse)
                     validationContext.AddFailure("Name", "That name is already taken");
-
             });
             RuleFor(n => n.Description).NotEmpty().MaximumLength(500);
             RuleFor(n => n.Arc).NotEmpty().MaximumLength(50);

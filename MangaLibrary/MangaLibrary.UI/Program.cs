@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -39,7 +40,7 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(n => 
 {
-    n.SchemaFilter<SwaggerSchemaFilter>();
+    n.OperationFilter<SwaggerJsonIgnore>();
 });
 builder.Services.Configure<AuthenticationSettings>(builder.Configuration.GetSection("Authentication"));
 builder.Services.AddDbContext<MangaLibraryDbContext>(optionsBuilder =>

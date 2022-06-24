@@ -17,15 +17,16 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Volume
         public int PageSize { get; set; }
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
+        public Guid MangaId { get; set; }
 
         public async override Task<PagedResult<MangaLibrary.DataAccess.Entities.Volume>> Execute(MangaLibraryDbContext context)
         {
             var baseQuery = context
                 .Volumes
-                .Where(n => SearchPhrase == null ||
+                .Where(n => n.MangaId == MangaId && (SearchPhrase == null ||
                 (n.Arc.ToLower().Contains(SearchPhrase.ToLower())) ||
                 (n.Name.ToLower().Contains(SearchPhrase.ToLower())) ||
-                (n.Description.ToLower().Contains(SearchPhrase.ToLower())));
+                (n.Description.ToLower().Contains(SearchPhrase.ToLower()))));
 
 
             if (!string.IsNullOrEmpty(SortBy))

@@ -30,7 +30,9 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Volume
                 PageSize = request.PageSize,
                 SearchPhrase = request.SearchPhrase,
                 SortBy = request.SortBy,
-                SortDirection = request.SortDirection
+                SortDirection = request.SortDirection,
+                MangaId = request.MangaId,
+                
             };
             var result = await _executor.Execute(query);
             return new GetVolumesResponse()

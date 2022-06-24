@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.User
 {
     public class UpdatePasswordRequest:IRequest<UpdatePasswordResponse>
     {
-        [IgnoreDataMember]
+        [JsonIgnore]
         public Guid Id { get; set; }
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }

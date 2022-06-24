@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Volume
@@ -15,7 +16,7 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Volume
         public string Description { get; set; }
         public string Arc { get; set; }
 
-        [IgnoreDataMember]
+        [JsonIgnore]
         public Guid MangaId { get; set; }
     }
 }

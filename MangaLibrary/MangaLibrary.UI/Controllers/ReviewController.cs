@@ -1,10 +1,14 @@
-﻿using MangaLibrary.ApplicationServices.API.Domain.Review;
+﻿using MangaLibrary.ApplicationServices.API.Domain;
+using MangaLibrary.ApplicationServices.API.Domain.Review;
+using MangaLibrary.UI.ApiModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangaLibrary.UI.Controllers
 {
+    [Produces("application/json")]
+    [Consumes("application/json")]
     [Route("api/manga/{mangaId}/[controller]")]
     [ApiController]
     public class ReviewController : ApiControllerBase
@@ -15,14 +19,19 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
-        public Task<IActionResult> GetAll(GetReviewsRequest request, [FromRoute] Guid mangaId)
+        [ProducesResponseType(typeof(GetReviewsResponse), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
+        public Task<IActionResult> GetAll([FromQuery]GetReviewsRequest request, [FromRoute] Guid mangaId)
         {
-            request.MangaId = mangaId;
+            if (request != null)
+                request.MangaId = mangaId;
             return this.HandleRequest<GetReviewsRequest, GetReviewsResponse>(request);
         }
 
         [HttpGet]
-        [Route("{Id}")]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(GetReviewByIdResponse), 200)]
+        [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Get([FromRoute]Guid mangaId, [FromRoute] Guid id)
         {
             var request = new GetReviewByIdRequest() { Id=id, MangaId=mangaId};
@@ -30,22 +39,34 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(AddReviewResponse), 200)]
+        [ProducesResponseType(typeof(ErrorResponseBase), 404)]
+        [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> Add([FromBody] AddReviewRequest request, [FromRoute] Guid mangaId)
         {
-            request.MangaId = mangaId;
+            if (request != null)
+                request.MangaId = mangaId;
             return this.HandleRequest<AddReviewRequest, AddReviewResponse>(request);
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(UpdateReviewResponse), 200)]
+        [ProducesResponseType(typeof(ErrorResponseBase), 404)]
+        [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> Update([FromBody] UpdateReviewRequest request, [FromRoute] Guid id, [FromRoute] Guid mangaId)
         {
-            request.Id = id;
-            request.MangaId = mangaId;
+            if (request != null)
+            {
+                request.Id = id;
+                request.MangaId = mangaId;
+            }
             return this.HandleRequest<UpdateReviewRequest, UpdateReviewResponse>(request);
         }
 
         [HttpDelete]
-        [Route("{Id}")]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(DeleteReviewResponse), 200)]
+        [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid mangaId, [FromRoute] Guid id)
         {
             var request = new DeleteReviewRequest() { Id = id, MangaId = mangaId };

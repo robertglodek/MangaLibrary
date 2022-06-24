@@ -14,12 +14,11 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Genre
         public UpdateGenreRequestValidator(MangaLibraryDbContext context)
         {
             RuleFor(n => n.Name).NotEmpty().MaximumLength(100);
-            RuleFor(n => n.Name).Custom((value, validationContext) =>
+            RuleFor(n => new { n.Name, n.Id }).Custom((value, validationContext) =>
             {
-                var nameInUse = context.Genres.Any(n => n.Name == value);
+                var nameInUse = context.Genres.Any(n => n.Name == value.Name && n.Id != value.Id);
                 if (nameInUse)
                     validationContext.AddFailure("Name", "That name is already taken");
-
             });
         }
     }

@@ -15,7 +15,7 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Review
         {
 
             RuleFor(n => n.Content).NotEmpty().MaximumLength(200);
-            RuleFor(n => n.Rating).NotEmpty().InclusiveBetween(1, 5);
+            RuleFor(n => n.Rating).InclusiveBetween(1, 5);
         }
     }
 }

@@ -12,8 +12,9 @@ namespace MangaLibrary.ApplicationServices.API.Validators.User
     {
         public LoginUserRequestValidator()
         {
-            RuleFor(n => n.Email).NotEmpty().EmailAddress();
-            RuleFor(n=>n.Password).NotEmpty();
+            RuleFor(n => n.Email).NotEmpty().MaximumLength(100);
+            RuleFor(n=>n.Password).NotEmpty().MinimumLength(6).MaximumLength(50);
+           
         }
     }
 }

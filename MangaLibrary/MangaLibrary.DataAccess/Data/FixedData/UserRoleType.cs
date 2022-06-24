@@ -11,6 +11,5 @@ namespace MangaLibrary.DataAccess.Data.FixedData
         public const string Admin = "Admin";
 
         public const string User = "User";
-
     }
 }

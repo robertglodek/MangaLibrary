@@ -67,7 +67,6 @@ namespace MangaLibrary.DataAccess.Data
                 n.Property(n => n.Email).IsRequired().HasMaxLength(100);
                 n.Property(n => n.PasswordHash).IsRequired();
                 n.Property(n => n.Nationality).IsRequired().HasMaxLength(40);
-                n.Property(n => n.Nationality).IsRequired().HasMaxLength(40);
             });
             builder.Entity<Volume>(n =>
             {

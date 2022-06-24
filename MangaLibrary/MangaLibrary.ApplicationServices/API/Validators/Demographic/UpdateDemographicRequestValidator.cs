@@ -16,12 +16,11 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Demographic
         {
             RuleFor(n => n.Value).NotEmpty().MaximumLength(50);
             RuleFor(n => n.Description).NotEmpty().MaximumLength(100);
-            RuleFor(n => n.Value).Custom((value, validationContext) =>
+            RuleFor(n => new { n.Value, n.Id }).Custom((value, validationContext) =>
             {
-                var nameInUse = context.Demographics.Any(n => n.Value == value);
+                var nameInUse = context.Demographics.Any(n => n.Value == value.Value && n.Id != value.Id);
                 if (nameInUse)
                     validationContext.AddFailure("Name", "That value is already taken");
-
             });
         }
     }
