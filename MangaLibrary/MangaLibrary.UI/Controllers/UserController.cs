@@ -1,7 +1,9 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain;
 using MangaLibrary.ApplicationServices.API.Domain.User;
+using MangaLibrary.DataAccess.Data.FixedData;
 using MangaLibrary.UI.ApiModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,7 @@ namespace MangaLibrary.UI.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : ApiControllerBase
     {
@@ -25,7 +27,6 @@ namespace MangaLibrary.UI.Controllers
         public Task<IActionResult> Register(RegisterUserRequest request)
         {
             return this.HandleRequest<RegisterUserRequest, RegisterUserResponse>(request);
-
         }
 
         [HttpPost]
@@ -39,6 +40,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles=UserRole.Admin)]
         [Route("{id}")]
         [ProducesResponseType(typeof(GetUserByIdResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
@@ -49,6 +51,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(GetUsersResponse), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> GetAll([FromQuery] GetUsersRequest request)
@@ -57,7 +60,8 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut]
-        [Route("password/{id}")]
+        [Route("{id}/password_change")]
+        [Authorize(Roles = UserRole.User)]
         [ProducesResponseType(typeof(UpdatePasswordResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(ErrorResponseBase), 401)]
@@ -71,6 +75,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.User)]
         [ProducesResponseType(typeof(UpdateUserResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -80,8 +85,11 @@ namespace MangaLibrary.UI.Controllers
                 request.Id = id;
             return this.HandleRequest<UpdateUserRequest, UpdateUserResponse>(request);
         }
+
+
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(DeleteUserResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid id)
@@ -89,5 +97,6 @@ namespace MangaLibrary.UI.Controllers
             var request = new DeleteUserRequest() { Id = id };
             return this.HandleRequest<DeleteUserRequest, DeleteUserResponse>(request);
         }
+
     }
 }

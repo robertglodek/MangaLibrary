@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Creator
 {
-    public class GetCreatorsResponse:ResponseBase<PagedResult<CreatorDetailsDTO>>
+    public class GetCreatorsResponse:ResponseBase<PagedResult<CreatorDTO>>
     {
     }
 }

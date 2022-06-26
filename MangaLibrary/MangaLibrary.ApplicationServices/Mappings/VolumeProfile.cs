@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Volume;
 using MangaLibrary.ApplicationServices.API.Domain.Volume;
+using MangaLibrary.DataAccess.CQRS.Queries.Volume;
 using MangaLibrary.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace MangaLibrary.ApplicationServices.Mappings
                .ForMember(n => n.Name, y => y.MapFrom(s => s.Name))
                .ForMember(n => n.ReleaseDate, y => y.MapFrom(s => s.ReleaseDate));
 
+            CreateMap<GetVolumesRequest, GetVolumesQuery>();
         }
     }
 }

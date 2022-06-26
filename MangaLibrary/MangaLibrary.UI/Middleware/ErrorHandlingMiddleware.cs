@@ -16,7 +16,7 @@ namespace MangaLibrary.UI.Middleware
         {
             try
             {
-               
+                Console.WriteLine("SIema");
                 await next(context);
             }
             catch (Exception exception)

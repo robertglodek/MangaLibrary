@@ -24,14 +24,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
         }
         public async Task<GetUsersResponse> Handle(GetUsersRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetUsersQuery()
-            {
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                SearchPhrase = request.SearchPhrase,
-                SortBy = request.SortBy,
-                SortDirection = request.SortDirection
-            };
+            var query = _mapper.Map<GetUsersQuery>(request);
             var result = await _executor.Execute(query);
             return new GetUsersResponse()
             {

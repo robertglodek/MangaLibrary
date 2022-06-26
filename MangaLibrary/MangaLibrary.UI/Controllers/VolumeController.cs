@@ -1,7 +1,9 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain;
 using MangaLibrary.ApplicationServices.API.Domain.Volume;
+using MangaLibrary.DataAccess.Data.FixedData;
 using MangaLibrary.UI.ApiModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,7 @@ namespace MangaLibrary.UI.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("api/manga/{mangaId}/[controller]")]
+    [Route("api/manga/{mangaId}/volume")]
     [ApiController]
     public class VolumeController : ApiControllerBase
     {
@@ -17,7 +19,6 @@ namespace MangaLibrary.UI.Controllers
         {
 
         }
-   
         [HttpGet]
         [ProducesResponseType(typeof(GetVolumesResponse), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -39,6 +40,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(AddVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -50,6 +52,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(UpdateVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -67,6 +70,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(DeleteVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid mangaId, [FromRoute] Guid id)

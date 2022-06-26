@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MangaLibrary.ApplicationServices.API.Domain.Creator;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Creator;
+using MangaLibrary.DataAccess.CQRS.Queries.Creator;
 using MangaLibrary.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace MangaLibrary.ApplicationServices.Mappings
                 .ForMember(n => n.DateOfBirth, y => y.MapFrom(s => s.DateOfBirth))
                 .ForMember(n => n.Mangas, y => y.MapFrom(s => s.Mangas))
                 .ForMember(n => n.Description, y => y.MapFrom(s => s.Description));
+
+            CreateMap<GetCreatorsRequest, GetCreatorsQuery>();
         }
     }
 }

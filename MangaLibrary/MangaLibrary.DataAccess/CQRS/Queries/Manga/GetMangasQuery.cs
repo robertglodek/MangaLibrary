@@ -18,6 +18,8 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Manga
         public int PageSize { get; set; }
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
+        public string Demographic { get; set; }
+        public string Genre { get; set; }
 
         public async override Task<PagedResult<MangaLibrary.DataAccess.Entities.Manga>> Execute(MangaLibraryDbContext context)
         {
@@ -25,11 +27,11 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Manga
                 .Mangas
                 .Include(n => n.Creators)
                 .Include(n => n.Genres)
+                .Include(n => n.Characters)
                 .Include(n => n.Demographic)
-                .Where(n => SearchPhrase == null ||
-                (n.Name.ToLower().Contains(SearchPhrase.ToLower())) ||
-                (n.Story.ToLower().Contains(SearchPhrase.ToLower())) ||
-                (n.Heroes.ToLower().Contains(SearchPhrase.ToLower())));
+                .Where(n => (SearchPhrase == null || (n.Name.ToLower().Contains(SearchPhrase.ToLower())) || (n.Story.ToLower().Contains(SearchPhrase.ToLower()))) 
+                && (Demographic==null || n.Demographic.Value==Demographic ) 
+                && (Genre==null || n.Genres.FirstOrDefault(n=>n.Name==Genre)!=null));
 
 
             if (!string.IsNullOrEmpty(SortBy))

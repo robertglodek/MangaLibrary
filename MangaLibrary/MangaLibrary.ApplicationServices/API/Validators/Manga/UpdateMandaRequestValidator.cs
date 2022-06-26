@@ -19,20 +19,23 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Manga
             RuleFor(n => n.Name).NotEmpty().MaximumLength(100);
             RuleFor(n => n.Description).NotEmpty().MaximumLength(500);
             RuleFor(n => n.Story).NotEmpty().MaximumLength(500);
-            RuleFor(n => n.Heroes).NotEmpty().MaximumLength(500);
+            RuleFor(n => n.Image).MaximumLength(200);
             RuleFor(n => n.Status).NotEmpty().MaximumLength(40);
             RuleFor(n => n.DemographicId).NotEmpty();
-            RuleFor(n => n.CreatorsIds).NotEmpty().Custom((values, validationContext) =>
+            RuleFor(n => n.CreatorsIds).Custom((values, validationContext) =>
             {
                 if (values != null && values.Count() > 1 && values.Count() != values.Distinct().Count())
                     validationContext.AddFailure("CreatorsIds", "Entered duplicate values");
-
+            });
+            RuleFor(n => n.CharactersIds).Custom((values, validationContext) =>
+            {
+                if (values != null && values.Count() > 1 && values.Count() != values.Distinct().Count())
+                    validationContext.AddFailure("CharactersIds", "Entered duplicate values");
             });
             RuleFor(n => n.GenresIds).Custom((values, validationContext) =>
             {
                 if (values != null && values.Count() > 1 && values.Count() != values.Distinct().Count())
                     validationContext.AddFailure("GenresIds", "Found duplicate values");
-
             });
             RuleFor(n => new { n.Name, n.Id } ).Custom((value, validationContext) =>
             {

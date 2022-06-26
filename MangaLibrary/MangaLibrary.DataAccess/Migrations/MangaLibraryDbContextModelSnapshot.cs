@@ -22,6 +22,21 @@ namespace MangaLibrary.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CharacterManga", b =>
+                {
+                    b.Property<Guid>("CharactersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MangasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CharactersId", "MangasId");
+
+                    b.HasIndex("MangasId");
+
+                    b.ToTable("CharacterManga");
+                });
+
             modelBuilder.Entity("CreatorManga", b =>
                 {
                     b.Property<Guid>("CreatorsId")
@@ -50,6 +65,31 @@ namespace MangaLibrary.DataAccess.Migrations
                     b.HasIndex("MangasId");
 
                     b.ToTable("GenreManga");
+                });
+
+            modelBuilder.Entity("MangaLibrary.DataAccess.Entities.Character", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Characters");
                 });
 
             modelBuilder.Entity("MangaLibrary.DataAccess.Entities.Creator", b =>
@@ -135,10 +175,9 @@ namespace MangaLibrary.DataAccess.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Heroes")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                    b.Property<string>("Image")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -287,6 +326,21 @@ namespace MangaLibrary.DataAccess.Migrations
                     b.HasIndex("MangaId");
 
                     b.ToTable("Volumes");
+                });
+
+            modelBuilder.Entity("CharacterManga", b =>
+                {
+                    b.HasOne("MangaLibrary.DataAccess.Entities.Character", null)
+                        .WithMany()
+                        .HasForeignKey("CharactersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MangaLibrary.DataAccess.Entities.Manga", null)
+                        .WithMany()
+                        .HasForeignKey("MangasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CreatorManga", b =>

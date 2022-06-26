@@ -1,6 +1,7 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain;
 using MangaLibrary.ApplicationServices.API.Domain.Creator;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
+using MangaLibrary.DataAccess.Data.FixedData;
 using MangaLibrary.UI.ApiModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ namespace MangaLibrary.UI.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/creator")]
     [ApiController]
     public class CreatorController : ApiControllerBase
     {
@@ -20,6 +21,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetCreatorsResponse), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> GetAll([FromQuery] GetCreatorsRequest request)
@@ -29,6 +31,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(GetCreatorByIdResponse),200)]
         [ProducesResponseType(typeof(ErrorResponseBase),404)]
         public Task<IActionResult> Get([FromRoute] Guid id)
@@ -38,6 +41,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(AddCreatorResponse), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> Add([FromBody] AddCreatorRequest request)
@@ -47,6 +51,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(UpdateCreatorResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -59,6 +64,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(DeleteCreatorResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid id)

@@ -40,8 +40,9 @@ namespace MangaLibrary.DataAccess.Data.Initializer
         {
             var genres = new List<Role>()
             {
-                new Role() { Name = UserRoleType.Admin },
-                new Role() { Name = UserRoleType.User }
+                new Role() { Name = UserRole.Admin },
+                new Role() { Name = UserRole.User },
+                new Role() { Name = UserRole.Editor },
             };
             return genres;
         }

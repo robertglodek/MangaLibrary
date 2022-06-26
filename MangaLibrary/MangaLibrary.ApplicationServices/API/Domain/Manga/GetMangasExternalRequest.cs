@@ -1,0 +1,16 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MangaLibrary.ApplicationServices.API.Domain.Manga
+{
+    public class GetMangasExternalRequest:IRequest<GetMangasExternalResponse>
+    {
+        public int Limit { get; set; }
+        public int Page { get; set; }
+        public string SearchQuery { get; set; }
+    }
+}

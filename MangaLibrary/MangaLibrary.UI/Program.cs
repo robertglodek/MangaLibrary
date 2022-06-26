@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
+using MangaLibrary.ApplicationServices.Components.Jikan;
 using MangaLibrary.ApplicationServices.Utilities;
 using MangaLibrary.DataAccess.CQRS.Commands;
 using MangaLibrary.DataAccess.CQRS.Queries;
@@ -29,6 +30,7 @@ builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
 builder.Logging.AddConsole();
 builder.Host.UseNLog();
+builder.Services.AddScoped<IJikanDataConnector, JikanDataConnector>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddMediatR(typeof(GetGenreByIdRequest).Assembly);
 builder.Services.AddAutoMapper(typeof(GetGenreByIdRequest).Assembly);
@@ -61,7 +63,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontEndClients", builder =>
                  builder.AllowAnyMethod().AllowAnyHeader().WithOrigins(allowedOrigins));
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(config => 
 {
     var authenticationSettings = new AuthenticationSettings();
@@ -77,14 +78,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     await scope.ServiceProvider.GetRequiredService<IDbInitializer>().InitializeAsync();
 }
-
 // Configure the HTTP request pipeline.
 app.UseExceptionHandlerMiddleware();
 app.UseRequestTimeHandlerMiddleware();

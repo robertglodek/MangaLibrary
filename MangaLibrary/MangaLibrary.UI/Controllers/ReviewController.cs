@@ -1,7 +1,9 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain;
 using MangaLibrary.ApplicationServices.API.Domain.Review;
+using MangaLibrary.DataAccess.Data.FixedData;
 using MangaLibrary.UI.ApiModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,7 @@ namespace MangaLibrary.UI.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("api/manga/{mangaId}/[controller]")]
+    [Route("api/manga/{mangaId}/review")]
     [ApiController]
     public class ReviewController : ApiControllerBase
     {
@@ -42,6 +44,7 @@ namespace MangaLibrary.UI.Controllers
         [ProducesResponseType(typeof(AddReviewResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
+        [Authorize(Roles = UserRole.User)]
         public Task<IActionResult> Add([FromBody] AddReviewRequest request, [FromRoute] Guid mangaId)
         {
             if (request != null)
@@ -53,6 +56,7 @@ namespace MangaLibrary.UI.Controllers
         [ProducesResponseType(typeof(UpdateReviewResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
+        [Authorize(Roles = UserRole.User)]
         public Task<IActionResult> Update([FromBody] UpdateReviewRequest request, [FromRoute] Guid id, [FromRoute] Guid mangaId)
         {
             if (request != null)
@@ -67,6 +71,7 @@ namespace MangaLibrary.UI.Controllers
         [Route("{id}")]
         [ProducesResponseType(typeof(DeleteReviewResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
+        [Authorize(Roles = UserRole.Admin)]
         public Task<IActionResult> Delete([FromRoute] Guid mangaId, [FromRoute] Guid id)
         {
             var request = new DeleteReviewRequest() { Id = id, MangaId = mangaId };

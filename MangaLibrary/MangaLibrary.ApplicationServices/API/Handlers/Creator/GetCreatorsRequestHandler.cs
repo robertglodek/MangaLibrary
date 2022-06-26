@@ -25,18 +25,11 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Creator
         }
         public async Task<GetCreatorsResponse> Handle(GetCreatorsRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetCreatorsQuery()
-            {
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                SearchPhrase = request.SearchPhrase,
-                SortBy = request.SortBy,
-                SortDirection = request.SortDirection
-            };
+            var query = _mapper.Map<GetCreatorsQuery>(request);
             var result = await _executor.Execute(query);
             return new GetCreatorsResponse()
             {
-                Data = new Domain.PagedResult<CreatorDetailsDTO>(_mapper.Map<List<CreatorDetailsDTO>>(result.Items)
+                Data = new Domain.PagedResult<CreatorDTO>(_mapper.Map<List<CreatorDTO>>(result.Items)
                 , result.TotalItemsCount
                 , request.PageSize
                 , request.PageNumber)

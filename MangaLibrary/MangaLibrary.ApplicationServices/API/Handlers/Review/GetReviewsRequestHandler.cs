@@ -25,14 +25,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Review
         }
         public async Task<GetReviewsResponse> Handle(GetReviewsRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetReviewsQuery()
-            {
-                MangaId=request.MangaId,
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                SortBy = request.SortBy,
-                SortDirection = request.SortDirection
-            };
+            var query = _mapper.Map<GetReviewsQuery>(request);
             var result = await _executor.Execute(query);
             return new GetReviewsResponse()
             {

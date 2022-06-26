@@ -25,7 +25,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Manga
         }
         public async Task<GetMangaByIdResponse> Handle(GetMangaByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.Id, PropertiesToInclude= "Genres,Demographic,Creators" };
+            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Manga>() { Id = request.Id, PropertiesToInclude= "Genres,Demographic,Creators,Characters" };
             var result = await _executor.Execute(query);
             if (result == null)
                 return new GetMangaByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Genre with id: {request.Id} doesn't exist") };

@@ -24,16 +24,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Volume
         }
         public async Task<GetVolumesResponse> Handle(GetVolumesRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetVolumesQuery()
-            {
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                SearchPhrase = request.SearchPhrase,
-                SortBy = request.SortBy,
-                SortDirection = request.SortDirection,
-                MangaId = request.MangaId,
-                
-            };
+            var query = _mapper.Map<GetVolumesQuery>(request);
             var result = await _executor.Execute(query);
             return new GetVolumesResponse()
             {

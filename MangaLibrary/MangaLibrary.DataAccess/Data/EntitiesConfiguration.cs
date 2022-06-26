@@ -41,7 +41,7 @@ namespace MangaLibrary.DataAccess.Data
                 n.Property(n => n.Name).IsRequired().HasMaxLength(100);
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
                 n.Property(n => n.Story).IsRequired().HasMaxLength(500);
-                n.Property(n => n.Heroes).IsRequired().HasMaxLength(500);
+                n.Property(n => n.Image).HasMaxLength(200);
                 n.Property(n => n.Status).IsRequired().HasMaxLength(40);
                 n.HasMany(n => n.Volumes).WithOne(n => n.Manga).HasForeignKey(n => n.MangaId);
                 n.HasMany(n => n.Reviews).WithOne(n => n.Manga).HasForeignKey(n => n.MangaId);
@@ -74,6 +74,13 @@ namespace MangaLibrary.DataAccess.Data
                 n.Property(n => n.Name).IsRequired().HasMaxLength(100);
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
                 n.Property(n => n.Arc).IsRequired().HasMaxLength(50);
+            });
+            builder.Entity<Character>(n =>
+            {
+                n.HasKey(n => n.Id);
+                n.Property(n => n.Image).HasMaxLength(200);
+                n.Property(n => n.Name).IsRequired().HasMaxLength(100);
+                n.Property(n => n.About).IsRequired().HasMaxLength(500);
             });
 
             return builder;

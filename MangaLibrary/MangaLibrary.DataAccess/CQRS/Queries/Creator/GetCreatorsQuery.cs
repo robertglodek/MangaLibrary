@@ -23,7 +23,6 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Creator
         {
             var baseQuery = context
                 .Creators
-                .Include(n => n.Mangas)
                 .Where(n => SearchPhrase == null ||
                 (n.FirstName.ToLower().Contains(SearchPhrase.ToLower())) ||
                 (n.LastName.ToLower().Contains(SearchPhrase.ToLower())));

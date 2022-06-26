@@ -2,6 +2,7 @@
 using MangaLibrary.ApplicationServices.API.Domain.Models;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Review;
 using MangaLibrary.ApplicationServices.API.Domain.Review;
+using MangaLibrary.DataAccess.CQRS.Queries.Review;
 using MangaLibrary.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,8 @@ namespace MangaLibrary.ApplicationServices.Mappings
              .ForMember(n => n.Rating, y => y.MapFrom(s => s.Rating))
              .ForMember(n => n.Author, y => y.MapFrom(s => s.Author))
              .ForMember(n => n.Content, y => y.MapFrom(s => s.Content));
+
+            CreateMap<GetReviewsRequest, GetReviewsQuery>();
         }
     }
 }

@@ -2,8 +2,10 @@
 using MangaLibrary.ApplicationServices.API.Domain.Genre;
 using MangaLibrary.ApplicationServices.API.Domain.Manga;
 using MangaLibrary.ApplicationServices.API.Domain.Models;
+using MangaLibrary.DataAccess.Data.FixedData;
 using MangaLibrary.UI.ApiModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +13,7 @@ namespace MangaLibrary.UI.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/manga")]
     [ApiController]
     public class MangaController : ApiControllerBase
     {
@@ -26,6 +28,16 @@ namespace MangaLibrary.UI.Controllers
             return this.HandleRequest<GetMangasRequest, GetMangasResponse>(request);
         }
 
+
+        [HttpGet]
+        [Route("external")]
+        [ProducesResponseType(typeof(GetMangasExternalResponse), 200)]
+        public Task<IActionResult> GetAllExternal([FromQuery] GetMangasExternalRequest request)
+        {
+            return this.HandleRequest<GetMangasExternalRequest, GetMangasExternalResponse>(request);
+        }
+
+
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(GetMangaByIdResponse), 200)]
@@ -37,6 +49,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(AddMangaResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -47,6 +60,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(UpdateMangaResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -62,6 +76,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(DeleteMangaResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid id)
@@ -69,5 +84,7 @@ namespace MangaLibrary.UI.Controllers
             var request = new DeleteMangaRequest() { Id = id };
             return this.HandleRequest<DeleteMangaRequest, DeleteMangaResponse>(request);
         }
+
+
     }
 }
