@@ -20,6 +20,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(GetRolesResponse), 200)]
         public Task<IActionResult> GetAll()
         {
@@ -28,6 +29,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UserRole.Admin)]
         [ProducesResponseType(typeof(GetRoleByIdResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Get([FromRoute] Guid id)
