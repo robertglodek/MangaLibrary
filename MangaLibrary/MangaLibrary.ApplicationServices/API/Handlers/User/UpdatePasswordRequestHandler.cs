@@ -43,7 +43,8 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
                 return new UpdatePasswordResponse() { Error = new Domain.ErrorModel(ErrorType.NotAuthenticated, "Old password invalid") };
 
             item.PasswordHash = _passwordHasher.HashPassword(item, request.NewPassword);
-            var command = new UpdateResourceCommand<MangaLibrary.DataAccess.Entities.User>() { Parameter = _mapper.Map(request, item) };
+
+            var command = new UpdateResourceCommand<MangaLibrary.DataAccess.Entities.User>() { Parameter = item };
             var result = await _commandExecutor.Execute(command);
             return new UpdatePasswordResponse() { Data = item.Id };
 

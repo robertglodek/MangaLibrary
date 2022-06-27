@@ -26,11 +26,11 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
         }
         public async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.User>() { Id = request.Id };
+            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.User>() { Id = request.Id, PropertiesToInclude="Role" };
             var result = await _executor.Execute(query);
             if (result == null)
                 return new GetUserByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"User with id: {request.Id} doesn't exist") };
-            return new GetUserByIdResponse() { Data = _mapper.Map<UserDTO>(result) };
+            return new GetUserByIdResponse() { Data = _mapper.Map<UserDetailsDTO>(result) };
         }
     }
 }

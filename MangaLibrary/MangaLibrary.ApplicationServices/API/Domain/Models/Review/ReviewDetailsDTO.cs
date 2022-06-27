@@ -1,5 +1,6 @@
 ﻿using MangaLibrary.ApplicationServices.API.Domain.Models.Creator;
 using MangaLibrary.ApplicationServices.API.Domain.Models.Manga;
+using MangaLibrary.ApplicationServices.API.Domain.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Models.Review
         public string Content { get; set; }
         public int Rating { get; set; }
         public DateTime PublishDate { get; set; }
-        public CreatorDTO Author { get; set; }
+        public UserDTO Author { get; set; }
     }
 }

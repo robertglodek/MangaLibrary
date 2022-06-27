@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.User
 {
-    public class RegisterUserResponse:ResponseBase<UserDTO>
+    public class RegisterUserResponse:ResponseBase<UserDetailsDTO>
     {
 
     }

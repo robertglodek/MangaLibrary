@@ -41,23 +41,27 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Manga
                     return new UpdateMangaResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Demographic with id: {request.DemographicId} doesn't exist") };
             }
 
-            if(! await CheckItemsToUpdate(request.GenresIds,item.Genres))
+            if(! await CheckItemsToUpdate(request.GenresIds,item.Genres,true))
                 return new UpdateMangaResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Some of provided genres don't exist") };
-            if (!await CheckItemsToUpdate(request.CreatorsIds, item.Creators))
+            if (!await CheckItemsToUpdate(request.CreatorsIds, item.Creators,false))
                 return new UpdateMangaResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Some of provided creators don't exist") };
-            if (!await CheckItemsToUpdate(request.CharactersIds, item.Characters))
+            if (!await CheckItemsToUpdate(request.CharactersIds, item.Characters,false))
                 return new UpdateMangaResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Some of provided characters don't exist") };
 
             var command = new UpdateResourceCommand<MangaLibrary.DataAccess.Entities.Manga>() { Parameter = _mapper.Map(request, item) };
             var result = await _commandExecutor.Execute(command);
             return new UpdateMangaResponse() { Data = _mapper.Map<MangaDTO>(result) };
-
         }
-        private async Task<bool> CheckItemsToUpdate<T>(IEnumerable<Guid> requestIds,List<T> sourceItems) where T: EntityBase
+        private async Task<bool> CheckItemsToUpdate<T>(IEnumerable<Guid> requestIds,List<T> sourceItems,bool isRequired) where T: EntityBase
         {
-            if (requestIds == null || requestIds.Count() == 0)
+
+            if ((requestIds == null || requestIds.Count() == 0))
+            {
+                if(sourceItems.Count!=0)
+                    sourceItems.RemoveAll(n => true);
                 return true;
-            if (!Enumerable.SequenceEqual(requestIds, sourceItems.Select(n => n.Id)))
+            }
+            if (Enumerable.SequenceEqual(requestIds, sourceItems.Select(n => n.Id)))
                 return true;
             var queryItems = await _queryExecutor.Execute(new GetResourcesForQuery<T>() { Ids = requestIds });
             if (queryItems.Count() != requestIds.Count())

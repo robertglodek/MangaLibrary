@@ -15,7 +15,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.User
 
         public async override Task<MangaLibrary.DataAccess.Entities.User> Execute(MangaLibraryDbContext context)
         {
-            var item = await context.Users.FirstOrDefaultAsync(n => n.Email == this.Email);
+            var item = await context.Users.Include(n=>n.Role).FirstOrDefaultAsync(n => n.Email == this.Email);
             return item;
         }
     }

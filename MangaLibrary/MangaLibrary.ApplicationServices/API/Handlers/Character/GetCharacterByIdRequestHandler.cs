@@ -25,7 +25,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Character
         }
         public async Task<GetCharacterByIdResponse> Handle(GetCharacterByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Creator>() { Id = request.Id, PropertiesToInclude = "Mangas" };
+            var query = new GetResourceQuery<MangaLibrary.DataAccess.Entities.Character>() { Id = request.Id, PropertiesToInclude = "Mangas" };
             var result = await _executor.Execute(query);
             if (result == null)
                 return new GetCharacterByIdResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Character with id: {request.Id} doesn't exist") };

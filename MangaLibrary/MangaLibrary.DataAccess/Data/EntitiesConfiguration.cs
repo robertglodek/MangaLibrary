@@ -73,7 +73,7 @@ namespace MangaLibrary.DataAccess.Data
                 n.HasKey(n => n.Id);
                 n.Property(n => n.Name).IsRequired().HasMaxLength(100);
                 n.Property(n => n.Description).IsRequired().HasMaxLength(500);
-                n.Property(n => n.Arc).IsRequired().HasMaxLength(50);
+                n.Property(n => n.Arc).HasMaxLength(50);
             });
             builder.Entity<Character>(n =>
             {

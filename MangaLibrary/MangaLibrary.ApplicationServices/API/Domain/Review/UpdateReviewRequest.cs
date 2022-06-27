@@ -15,8 +15,8 @@ namespace MangaLibrary.ApplicationServices.API.Domain.Review
         public Guid Id { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
+        [JsonIgnore]
         public Guid AuthorId { get; set; }
-
         [JsonIgnore]
         public Guid MangaId { get; set; }
     }

@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MangaLibrary.UI.Controllers
 {
@@ -47,8 +48,13 @@ namespace MangaLibrary.UI.Controllers
         [Authorize(Roles = UserRole.User)]
         public Task<IActionResult> Add([FromBody] AddReviewRequest request, [FromRoute] Guid mangaId)
         {
+
             if (request != null)
+            {
                 request.MangaId = mangaId;
+                request.AuthorId = Guid.Parse(User.Claims.FirstOrDefault(n => n.Type == ClaimTypes.NameIdentifier).Value);
+            }
+                
             return this.HandleRequest<AddReviewRequest, AddReviewResponse>(request);
         }
 
@@ -63,6 +69,7 @@ namespace MangaLibrary.UI.Controllers
             {
                 request.Id = id;
                 request.MangaId = mangaId;
+                request.AuthorId = Guid.Parse(User.Claims.FirstOrDefault(n => n.Type == ClaimTypes.NameIdentifier).Value);
             }
             return this.HandleRequest<UpdateReviewRequest, UpdateReviewResponse>(request);
         }
@@ -71,7 +78,7 @@ namespace MangaLibrary.UI.Controllers
         [Route("{id}")]
         [ProducesResponseType(typeof(DeleteReviewResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         public Task<IActionResult> Delete([FromRoute] Guid mangaId, [FromRoute] Guid id)
         {
             var request = new DeleteReviewRequest() { Id = id, MangaId = mangaId };

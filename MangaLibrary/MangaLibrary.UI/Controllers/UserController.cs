@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MangaLibrary.UI.Controllers
 {
@@ -40,13 +41,13 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles=UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin)]
         [Route("{id}")]
         [ProducesResponseType(typeof(GetUserByIdResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var request = new GetUserByIdRequest();
+            var request = new GetUserByIdRequest() { Id=id};
             return this.HandleRequest<GetUserByIdRequest, GetUserByIdResponse>(request);
         }
 
@@ -60,29 +61,28 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/password_change")]
-        [Authorize(Roles = UserRole.User)]
+        [Route("password_change")]
+        [Authorize]
         [ProducesResponseType(typeof(UpdatePasswordResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(ErrorResponseBase), 401)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
-        public Task<IActionResult> ChangePassword([FromRoute]Guid id, [FromBody] UpdatePasswordRequest request)
+        public Task<IActionResult> ChangePassword([FromBody] UpdatePasswordRequest request)
         {
             if (request != null)
-                request.Id = id;
+                request.Id = Guid.Parse(User.Claims.FirstOrDefault(n => n.Type == ClaimTypes.NameIdentifier).Value);
             return this.HandleRequest<UpdatePasswordRequest, UpdatePasswordResponse>(request);
         }
 
         [HttpPut]
-        [Route("{id}")]
-        [Authorize(Roles = UserRole.User)]
+        [Authorize]
         [ProducesResponseType(typeof(UpdateUserResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
-        public Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateUserRequest request)
+        public Task<IActionResult> Update([FromBody] UpdateUserRequest request)
         {
             if (request != null)
-                request.Id = id;
+                request.Id = Guid.Parse(User.Claims.FirstOrDefault(n => n.Type == ClaimTypes.NameIdentifier).Value);
             return this.HandleRequest<UpdateUserRequest, UpdateUserResponse>(request);
         }
 

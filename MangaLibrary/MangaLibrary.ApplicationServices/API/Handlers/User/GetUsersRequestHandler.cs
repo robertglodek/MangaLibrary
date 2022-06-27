@@ -28,7 +28,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
             var result = await _executor.Execute(query);
             return new GetUsersResponse()
             {
-                Data = new Domain.PagedResult<UserDTO>(_mapper.Map<List<UserDTO>>(result.Items)
+                Data = new Domain.PagedResult<UserDetailsDTO>(_mapper.Map<List<UserDetailsDTO>>(result.Items)
                 , result.TotalItemsCount
                 , request.PageSize
                 , request.PageNumber)

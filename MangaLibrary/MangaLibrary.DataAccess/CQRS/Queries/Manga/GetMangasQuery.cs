@@ -27,7 +27,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Manga
                 .Mangas
                 .Include(n => n.Creators)
                 .Include(n => n.Genres)
-                .Include(n => n.Characters)
+                .Include(n => n.Reviews)
                 .Include(n => n.Demographic)
                 .Where(n => (SearchPhrase == null || (n.Name.ToLower().Contains(SearchPhrase.ToLower())) || (n.Story.ToLower().Contains(SearchPhrase.ToLower()))) 
                 && (Demographic==null || n.Demographic.Value==Demographic ) 
@@ -51,6 +51,7 @@ namespace MangaLibrary.DataAccess.CQRS.Queries.Manga
                 .Skip(PageSize * (PageNumber - 1))
                 .Take(PageSize)
                 .ToListAsync();
+          
             var totalItemsCount = baseQuery.Count();
             return new PagedResult<Entities.Manga>(mangas, totalItemsCount, PageSize, PageNumber);
         }

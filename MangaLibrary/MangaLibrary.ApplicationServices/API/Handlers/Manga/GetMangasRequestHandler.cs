@@ -28,7 +28,7 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.Manga
             var result = await _executor.Execute(query);
             return new GetMangasResponse()
             {
-                Data = new Domain.PagedResult<MangaDetailsDTO>(_mapper.Map<List<MangaDetailsDTO>>(result.Items)
+                Data = new Domain.PagedResult<PagedMangaDTO>(_mapper.Map<List<PagedMangaDTO>>(result.Items)
                 , result.TotalItemsCount
                 , request.PageSize
                 , request.PageNumber)

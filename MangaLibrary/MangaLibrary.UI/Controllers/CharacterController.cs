@@ -22,7 +22,6 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(GetCharactersRequest), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> GetAll([FromQuery] GetCharactersRequest request)
@@ -32,7 +31,6 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [AllowAnonymous]
         [ProducesResponseType(typeof(GetCharacterByIdResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Get([FromRoute] Guid id)
@@ -42,7 +40,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(AddCharacterResponse), 200)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> Add([FromBody] AddCharacterRequest request)
@@ -52,20 +50,23 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(UpdateCharacterResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
         public Task<IActionResult> Update([FromBody] UpdateCharacterRequest request, [FromRoute] Guid id)
         {
             if (request != null)
+            {
                 request.Id = id;
+                this.ReValidateModel(request);
+            }
             return this.HandleRequest<UpdateCharacterRequest, UpdateCharacterResponse>(request);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(DeleteCharacterResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid id)

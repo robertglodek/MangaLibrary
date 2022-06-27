@@ -28,6 +28,14 @@ namespace MangaLibrary.ApplicationServices.Mappings
                 .ForMember(n => n.DateOfBirth, n => n.MapFrom(s => s.DateOfBirth));
 
             CreateMap<User, UserDTO>()
+                .ForMember(n => n.Id, n => n.MapFrom(s => s.Id))
+                .ForMember(n => n.Email, n => n.MapFrom(s => s.Email))
+                .ForMember(n => n.FirstName, n => n.MapFrom(s => s.FirstName))
+                .ForMember(n => n.DateOfBirth, n => n.MapFrom(s => s.DateOfBirth))
+                .ForMember(n => n.LastName, n => n.MapFrom(s => s.LastName));
+
+            CreateMap<User, UserDetailsDTO>()
+                .ForMember(n => n.Id, n => n.MapFrom(s => s.Id))
                 .ForMember(n => n.Email, n => n.MapFrom(s => s.Email))
                 .ForMember(n => n.Nationality, n => n.MapFrom(s => s.Nationality))
                 .ForMember(n => n.DateOfBirth, n => n.MapFrom(s => s.DateOfBirth))

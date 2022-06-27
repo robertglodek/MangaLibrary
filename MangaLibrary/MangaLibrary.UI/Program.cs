@@ -78,7 +78,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -88,7 +87,7 @@ using (var scope = app.Services.CreateScope())
 app.UseExceptionHandlerMiddleware();
 app.UseRequestTimeHandlerMiddleware();
 app.UseCors("FrontEndClients");
-
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

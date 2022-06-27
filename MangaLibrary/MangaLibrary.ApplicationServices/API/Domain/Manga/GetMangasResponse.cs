@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangaLibrary.ApplicationServices.API.Domain.Manga
 {
-    public class GetMangasResponse:ResponseBase<PagedResult<MangaDetailsDTO>>
+    public class GetMangasResponse:ResponseBase<PagedResult<PagedMangaDTO>>
     {
     }
 }

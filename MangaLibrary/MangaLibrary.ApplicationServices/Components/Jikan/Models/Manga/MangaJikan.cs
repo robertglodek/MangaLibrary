@@ -29,5 +29,9 @@ namespace MangaLibrary.ApplicationServices.Components.Jikan.Models.Manga
         public int Members { get; set; }
         [JsonProperty("favorites")]
         public int Favorites { get; set; }
+        [JsonProperty("popularity")]
+        public int Popularity { get; set; }
+        [JsonProperty("synopsis")]
+        public string Synopsis { get; set; }
     }
 }

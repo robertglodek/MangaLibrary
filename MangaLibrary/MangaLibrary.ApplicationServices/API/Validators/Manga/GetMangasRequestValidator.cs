@@ -15,9 +15,9 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Manga
         private int[] allowedPageSizes = new[] { 6, 12, 18 };
 
         private string[] allowedSortByColumnNames = new[]
-            { nameof(MangaLibrary.DataAccess.Entities.Creator.FirstName),
-              nameof(MangaLibrary.DataAccess.Entities.Creator.LastName),
-              nameof(MangaLibrary.DataAccess.Entities.Creator.DateOfBirth)};
+            { nameof(MangaLibrary.DataAccess.Entities.Manga.Name),
+              nameof(MangaLibrary.DataAccess.Entities.Manga.Status),
+              nameof(MangaLibrary.DataAccess.Entities.Manga.Demographic)};
 
         private string[] allowedGenres;
         private string[] allowedDemographics;
@@ -43,7 +43,7 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Manga
 
             RuleFor(r => r.Genre)
                .Must(value => string.IsNullOrEmpty(value) || allowedGenres.Contains(value))
-               .WithMessage($"Genre by is optional, or must be in [{string.Join(",", allowedGenres)}]");
+               .WithMessage($"Genre is optional, or must be in [{string.Join(",", allowedGenres)}]");
         }
     }
 }

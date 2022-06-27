@@ -40,7 +40,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(AddVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -52,7 +52,7 @@ namespace MangaLibrary.UI.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(UpdateVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         [ProducesResponseType(typeof(IEnumerable<Error>), 400)]
@@ -70,7 +70,7 @@ namespace MangaLibrary.UI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = UserRole.Admin)]
+        [Authorize(Roles = UserRole.Admin + "," + UserRole.Editor)]
         [ProducesResponseType(typeof(DeleteVolumeResponse), 200)]
         [ProducesResponseType(typeof(ErrorResponseBase), 404)]
         public Task<IActionResult> Delete([FromRoute] Guid mangaId, [FromRoute] Guid id)

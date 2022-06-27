@@ -23,7 +23,7 @@ namespace MangaLibrary.ApplicationServices.API.Validators.Volume
 
             });
             RuleFor(n => n.Description).NotEmpty().MaximumLength(500);
-            RuleFor(n => n.Arc).NotEmpty().MaximumLength(50);
+            RuleFor(n => n.Arc).MaximumLength(50);
         }
     }
 }

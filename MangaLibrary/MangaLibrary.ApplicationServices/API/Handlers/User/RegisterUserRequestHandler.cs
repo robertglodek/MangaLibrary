@@ -33,14 +33,14 @@ namespace MangaLibrary.ApplicationServices.API.Handlers.User
         }
         public async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
         {
-            var role = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Role>());
+            var role = await _queryExecutor.Execute(new GetResourceQuery<MangaLibrary.DataAccess.Entities.Role>() {Id=request.RoleId});
             if (role == null)
                 return new RegisterUserResponse() { Error = new Domain.ErrorModel(ErrorType.NotFound, $"Role with id: {request.RoleId} doesn't exist") };
             var user = _mapper.Map<MangaLibrary.DataAccess.Entities.User>(request);
             user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
             var command = new AddResourceCommand<MangaLibrary.DataAccess.Entities.User>() { Parameter = user };
             var result = await _commandExecutor.Execute(command);
-            return new RegisterUserResponse() { Data = _mapper.Map<UserDTO>(result) };
+            return new RegisterUserResponse() { Data = _mapper.Map<UserDetailsDTO>(result) };
         }
     }
 }

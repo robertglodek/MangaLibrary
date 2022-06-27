@@ -12,7 +12,7 @@ namespace MangaLibrary.ApplicationServices.API.Validators.User
     {
         public UpdateUserRequestValidator()
         {
-            RuleFor(n => n.Nationality).NotEmpty().MaximumLength(100);
+            RuleFor(n => n.Nationality).NotEmpty().MaximumLength(40);
             RuleFor(n => n.FirstName).NotEmpty().MaximumLength(40);
             RuleFor(n => n.LastName).NotEmpty().MaximumLength(40);
         }
